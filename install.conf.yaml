@@ -1,0 +1,45 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+
+- link:
+    ~/.config/bar:
+      path: config/bar
+    ~/.config/zsh/prompt_lambda_setup:
+      path: config/zsh/prompt_lambda_setup
+    ~/.config/zsh/.zshrc:
+      path: config/zsh/zshrc
+    ~/.config/zsh/.zshenv:
+      path: config/zsh/zshenv
+    ~/.config/zsh/.zlogout:
+      path: config/zsh/zlogout
+    ~/.config/zsh/.zlogin:
+      path: config/zsh/zlogin
+    ~/.config/zsh/.zpreztorc:
+      path: config/zsh/zpreztorc
+    ~/.config/mutt/pgp5.rc:
+      path: config/mutt/pgp5.rc
+    ~/.config/mutt/mailcap:
+      path: config/mutt/mailcap
+    ~/.config/sxhkd:
+      path: config/sxhkd
+    ~/.config/X11:
+      path: config/X11
+    ~/.config/nvim:
+      path: config/nvim
+    ~/.config/conky:
+      path: config/conky
+    ~/.config/bspwm:
+      path: config/bspwm
+    ~/.gitconfig:
+      path: gitconfig
+    ~/.gtkrc-2.0:
+      path: gtkrc-2.0
+    ~/.xinitrc:
+      path: xinitrc
+
+- clean: ['~']
+
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]

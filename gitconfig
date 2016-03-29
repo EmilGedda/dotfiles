@@ -1,3 +1,5 @@
 [user]
 	email = emil.gedda@emilgedda.se
 	name = Emil Gedda
+[push]
+	default = simple

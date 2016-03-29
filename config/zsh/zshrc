@@ -1,0 +1,68 @@
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+alias vim=nvim
+alias vi=nvim
+alias chrome=google-chrome-stable
+alias mutt="mutt -F $XDG_CONFIG_HOME/mutt/muttrc"
+export EDITOR=nvim
+export PAGER=less
+export FONTCONFIG_PATH=/etc/fonts
+
+# Customize to your needs...
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.config/zsh/histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt autocd
+unsetopt beep
+unsetopt correct_all
+bindkey -v
+
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/emil/.config/zsh/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+autoload -Uz promptinit
+promptinit
+
+function silence(){ 
+  eval "$*" &>/dev/null 
+} 
+
+function prepend-sudo {
+  if [[ $BUFFER != "sudo "* ]]; then
+    BUFFER="sudo $BUFFER"; CURSOR+=5
+  fi
+
+}
+zle -N prepend-sudo 
+bindkey "^[s" prepend-sudo
+
+
+bindkey "\e[A" history-search-backward
+bindkey "\e[B" history-search-forward
+
+# Enforce default grep colos
+export GREP_COLOR="01;31"
+export GREP_COLORS="mt=$GREP_COLOR"
+
+export LESSHISTSIZE=0
+export LESSHISTFILE=/dev/null
+export XDG_CACHE_DIR="$HOME/.cache"
+export XAUTHORITY="$XDG_CACHE_DIR/Xorg/Xauthority"
+
+export PATH=$PATH:$HOME/.cabal/bin
