@@ -48,7 +48,7 @@ while [ -z "$wid" -a "$tries_left" -gt 0 ] ; do
 done
 
 for w in $wid; do
-    xdo id -N Bspwm -n root | sort | xargs -I% xdo above -t "%" "$w"
+    xdo id -N Bspwm -n root | xargs -I% xdo above -t "%" "$w"
 done
 
 wait
