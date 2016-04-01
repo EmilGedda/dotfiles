@@ -24,6 +24,7 @@ let g:neomake_warning_sign 	= {
 	\ 'texthl': 'WarningMsg'
 	\ }
 
+set tabstop=4 softtabstop=4 expandtab shiftwidth=4 smarttab
 hi StatusLine ctermfg=242
 hi Search ctermbg=NONE
 hi SignColumn ctermbg=130
