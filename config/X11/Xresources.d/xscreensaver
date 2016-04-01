@@ -1,10 +1,10 @@
 ! XScreenSaver Preferences File
 ! http://www.jwz.org/xscreensaver/
 
-xscreensaver.timeout:           0:30:00
+xscreensaver.timeout:           0:20:00
 xscreensaver.cycle:		0:10:00
 xscreensaver.lock:		True
-xscreensaver.lockTimeout:	1:30:00
+xscreensaver.lockTimeout:	0:30:00
 xscreensaver.passwdTimeout:	0:00:30
 xscreensaver.visualID:	default
 xscreensaver.installColormap:    True
