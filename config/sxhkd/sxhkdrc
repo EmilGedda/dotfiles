@@ -152,11 +152,11 @@ super + {KP_Subtract, KP_Add}
 	bspc config -d focused window_gap \
 		$(($(bspc config -d focused window_gap) {-,+} 5))
 
-~XF86AudioPrev
-	playerctl previous
+~{XF86AudioRaiseVolume,XF86AudioLowerVolume} 
+    pactl list sinks short | grep RUNNING | cut -f2 | xargs -Ifoo pactl set-sink-volume foo {+,-}5%
 
-~XF86AudioPlay
-	playerctl play-pause
+~XF86AudioMute
+    pactl list sinks short | grep RUNNING | cut -f2 | xargs -I% pactl set-sink-mute % toggle
 
-~XF86AudioNext
-	playerctl next
+~{XF86AudioPrev,XF86AudioPlay,XF86AudioNext}
+	playerctl {previous,play-pause,next}
