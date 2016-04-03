@@ -1,3 +1,15 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
+[submodule "config/nvim/plugged/ghcmod-vim"]
+	path = config/nvim/plugged/ghcmod-vim
+	url = git@github.com:eagletmt/ghcmod-vim.git
+[submodule "config/nvim/plugged/neomake"]
+	path = config/nvim/plugged/neomake
+	url = git@github.com:benekastah/neomake.git
+[submodule "config/nvim/plugged/vimproc.vim"]
+	path = config/nvim/plugged/vimproc.vim
+	url = git@github.com:Shougo/vimproc.vim.git
+[submodule "config/nvim/plugged/vim-sensible"]
+	path = config/nvim/plugged/vim-sensible
+	url = git@github.com:tpope/vim-sensible.git
