@@ -40,6 +40,8 @@
       path: xinitrc
     ~/dev/scripts:
       path: scripts
+    ~/.config/systemd:
+      path: config/systemd
 - clean: ['~']
 
 - shell:
