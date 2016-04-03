@@ -33,7 +33,7 @@ clock &
 
 . panel_colors
 
-tee -a $PANEL_FIFO1 $<$PANEL_FIFO >$PANEL_FIFO2 &
+tee -a $PANEL_FIFO1 <$PANEL_FIFO >$PANEL_FIFO2 &
 
 panel_bar < "$PANEL_FIFO1" | lemonbar -a 32 -n "$PANEL_WM_NAME" -g 1920x$PANEL_HEIGHT -f "$PANEL_FONT" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" & 
 
