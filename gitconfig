@@ -3,3 +3,5 @@
 	name = Emil Gedda
 [push]
 	default = simple
+[gitreview]
+	remote = origin

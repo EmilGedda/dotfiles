@@ -1,5 +1,5 @@
 !!! Enable perl extensions
-URxvt.perl-ext-common:		default,matcher,clipboard,-searchable-scrollback
+URxvt.perl-ext-common:		default,matcher,-searchable-scrollback
 
 !!! Scrolling options
 ! Do not scroll with output
@@ -19,15 +19,17 @@ URxvt*scrollBar_floating:	false
 URxvt*secondaryScreen:		1
 URxvt*secondaryScroll:		0
 
+URxvt*altSendsEscape: true
 
 !!! Disable ISO modes
 URxvt.iso14755:			false
 URxvt.iso14755_52:		false
 
 !!! Copy paste
-URxvt.keysym.C-C: 		perl:clipboard:copy
-URxvt.keysym.C-V: 		perl:clipboard:paste
-URxvt.keysym.C-A-V:	 	perl:clipboard:paste_escaped
+! URxvt.clipboard.autocopy: true
+! URxvt.keysym.C-c: 		perl:clipboard:copy
+! URxvt.keysym.C-v: 		perl:clipboard:paste
+! URxvt.keysym.C-A-v:	 	perl:clipboard:paste_escaped
 
 !!! Clickable URLs
 URxvt.url-launcher:		/usr/bin/google-chrome-stable
@@ -38,7 +40,7 @@ Xft.antialias:			true
 Xft.hintstyle:			hintfull
 Xft.autohint:			true
 Xft.hinting:			true
-URxvt.font:			xft:Droid Sans Mono:pixelsize=11:Regular
+URxvt.font:			    xft:Droid Sans Mono:pixelsize=11:Regular
 URxvt.letterspace:		-1
 
 !!! Current color scheme

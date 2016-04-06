@@ -26,7 +26,7 @@ SAVEHIST=1000
 setopt autocd
 unsetopt beep
 unsetopt correct_all
-bindkey -v
+bindkey -e
 
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
@@ -52,6 +52,8 @@ function prepend-sudo {
 zle -N prepend-sudo 
 bindkey "^[s" prepend-sudo
 
+#bindkey "^[^[[C" forward-word     # Ctrl+right  => forward word
+#bindkey "^[0;d" backward-word    # Ctrl+left   => backward word
 
 bindkey "\e[A" history-search-backward
 bindkey "\e[B" history-search-forward
