@@ -7,6 +7,8 @@ Plug 'Shougo/vimproc.vim'
 
 call plug#end()
 
+filetype plugin indent on
+
 autocmd! BufWritePost,BufEnter * Neomake
 
 set nu
@@ -23,6 +25,9 @@ let g:neomake_warning_sign 	= {
 	\ 'text': '?>', 
 	\ 'texthl': 'WarningMsg'
 	\ }
+
+let g:neomake_cpp_enable_markers=['gcc']
+let g:neomake_cpp_gcc_args = ["-std=c++14", "-Wextra", "-Wall", "-g"]
 
 set tabstop=4 softtabstop=4 expandtab shiftwidth=4 smarttab
 hi StatusLine ctermfg=242

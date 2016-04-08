@@ -14,6 +14,7 @@ alias vim=nvim
 alias vi=nvim
 alias chrome=google-chrome-stable
 alias mutt="mutt -F $XDG_CONFIG_HOME/mutt/muttrc"
+alias fuckoff="pkill chrome && poweroff"
 export EDITOR=nvim
 export PAGER=less
 export FONTCONFIG_PATH=/etc/fonts
@@ -55,8 +56,8 @@ bindkey "^[s" prepend-sudo
 #bindkey "^[^[[C" forward-word     # Ctrl+right  => forward word
 #bindkey "^[0;d" backward-word    # Ctrl+left   => backward word
 
-bindkey "\e[A" history-search-backward
-bindkey "\e[B" history-search-forward
+bindkey "\e[A" history-beginning-search-backward
+bindkey "\e[B" history-beginning-search-forward
 
 # Enforce default grep colos
 export GREP_COLOR="01;31"

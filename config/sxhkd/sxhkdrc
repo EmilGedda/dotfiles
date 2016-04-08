@@ -161,7 +161,7 @@ super + {KP_Subtract, KP_Add}
     pactl list sinks short | grep RUNNING | cut -f2 | xargs -I% pactl set-sink-mute % toggle
 
 ~{XF86AudioPrev,XF86AudioNext}
-    ~/dev/scripts/src/music.sh {prev,_}
+    ~/dev/scripts/src/music.sh {prev,next}
 
 ~XF86AudioPlay
 	mpc toggle

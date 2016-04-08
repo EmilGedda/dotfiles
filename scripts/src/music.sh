@@ -1,17 +1,19 @@
 #! /usr/bin/env bash
 
 # Ugly mpd hack
-# mpd prev does not actually play the previous song, while repeat is on
+# mpd prev does not actually play the previous song while repeat is on
 # Instead, it replays the current one.
 # This hack allows prev/next and then wraps around if it hits bottom or top
 # Potential TODO: Only do this if repeat mode is on?
+if [[ "$1" = "next" ]]; then
+    mpc next
+    exit
+fi
 
 POS=$(mpc status -f "%position%" | head -n1)
 POSINT=1
 if [[ "$1" = "prev" ]]; then
     POSINT=$(($POS - 1))
-else
-    POSINT=$(($POS + 1))
 fi
 LEN=$(mpc playlist | wc -l)
 
