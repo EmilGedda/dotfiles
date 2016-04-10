@@ -4,6 +4,7 @@ Plug 'tpope/vim-sensible'
 Plug 'benekastah/neomake'
 Plug 'eagletmt/ghcmod-vim'
 Plug 'Shougo/vimproc.vim'
+Plug 'vale1410/vim-minizinc'
 
 call plug#end()
 
