@@ -9,7 +9,8 @@ Plug 'benekastah/neomake'
 Plug 'eagletmt/ghcmod-vim'
 Plug 'Shougo/vimproc.vim'
 Plug 'eagletmt/neco-ghc'
-Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+Plug 'zchee/deoplete-clang'
+Plug 'Shougo/deoplete.nvim'
 
 call plug#end()
 
@@ -31,6 +32,8 @@ let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 inoremap <expr><C-g>     deoplete#mappings#undo_completion()
 inoremap <expr><C-l>     deoplete#mappings#complete_common_string()
 
+hi Pmenu ctermbg=238 ctermfg=251
+
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
@@ -43,13 +46,14 @@ endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
-" <C-h>, <BS>: close popup and delete backword char.
-"inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
-"inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+let g:deoplete#sources#clang#sort_algo = 'priority'
+let g:deoplete#sources#clang#libclang_path = "/usr/lib/libclang.so"
+let g:deoplete#sources#clang#clang_header ="/usr/include/clang/"
+
+inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
 set completeopt+=menuone,noinsert
+set completeopt-=preview
 
 filetype plugin indent on
 
