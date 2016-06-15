@@ -1,5 +1,5 @@
 !!! Enable perl extensions
-URxvt.perl-ext-common:		default,matcher,-searchable-scrollback
+URxvt.perl-ext-common:		default,matcher,-searchable-scrollback,resize-font
 
 !!! Scrolling options
 ! Do not scroll with output
@@ -34,6 +34,10 @@ URxvt.iso14755_52:		false
 !!! Clickable URLs
 URxvt.url-launcher:		/usr/bin/google-chrome-stable
 URxvt.matcher.button:		1
+
+!!! Change font size on the fly
+URxvt.resize-font.smaller: C-Down
+URxvt.resize-font.bigger: C-Up
 
 !!! Font settings
 Xft.antialias:			true

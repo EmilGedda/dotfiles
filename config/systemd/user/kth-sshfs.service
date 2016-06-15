@@ -1,0 +1,11 @@
+[Unit]
+Description=Mount KTH root
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/emil/KTH/mount_kth.sh
+ExecStop=/home/emil/KTH/umount_kth.sh
+
+[Install]
+WantedBy=multi-user.target

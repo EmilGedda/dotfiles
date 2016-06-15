@@ -16,6 +16,9 @@
 
 export GNUPGHOME=$XDG_CONFIG_HOME/gnupg
 
+#Mount KTH home dir
+(~/KTH/mount_kth.sh &)
+
 # Print a random, hopefully interesting, adage.
 #if (( $+commands[fortune] )); then
 #  if [[ -t 0 || -t 1 ]]; then

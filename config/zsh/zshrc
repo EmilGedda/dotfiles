@@ -14,7 +14,7 @@ alias vim=nvim
 alias vi=nvim
 alias chrome=google-chrome-stable
 alias mutt="mutt -F $XDG_CONFIG_HOME/mutt/muttrc"
-alias fuckoff="pkill chrome && poweroff"
+alias fuckoff="pkill chrome; poweroff"
 export EDITOR=nvim
 export PAGER=less
 export FONTCONFIG_PATH=/etc/fonts
@@ -69,3 +69,4 @@ export XDG_CACHE_DIR="$HOME/.cache"
 export XAUTHORITY="$XDG_CACHE_DIR/Xorg/Xauthority"
 
 export PATH=$PATH:$HOME/.cabal/bin
+export PATH=$PATH:$HOME/.local/bin

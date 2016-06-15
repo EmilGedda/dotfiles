@@ -18,8 +18,8 @@ cd ~/KTH/Courses
 ID=$(echo ${ID^^} | xargs)      # Trim off excessive whitespaces 
 NICK=$(echo ${NICK,,} | xargs) 
 
-IDF="by-id/$ID"     
-NICKF="by-nick/$NICK"  # Lowercase the full string
+IDF="by-id/$ID"
+NICKF="by-nick/$NICK"
 
 mkdir -p by-name/{sv,en} "./$IDF" by-nick
 ln -s "../$IDF" "$NICKF" 

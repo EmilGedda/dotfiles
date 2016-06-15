@@ -5,3 +5,13 @@
 	default = simple
 [gitreview]
 	remote = origin
+[alias]
+	ryck = pull
+	tryck = push
+	gren = branch
+	forgrena = branch
+	forbinda = commit
+	ympa = rebase
+	sammanfoga = merge
+[merge]
+	tool = kdiff3
