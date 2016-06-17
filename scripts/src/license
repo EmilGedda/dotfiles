@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -e
+
+USERINFOSTR=$(git config  --list | grep -P "user.(email|name)" | cut -d= -f2)
+readarray -t USERINFO <<< "$USERINFOSTR"
+echo "Name: ${USERINFO[1]}"
+echo "Email: ${USERINFO[0]}"

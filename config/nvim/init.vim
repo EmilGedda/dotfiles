@@ -1,7 +1,3 @@
-function! DoRemote(arg)
-  UpdateRemotePlugins
-endfunction
-
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'tpope/vim-sensible'
@@ -22,12 +18,6 @@ autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 let g:deoplete#enable_ignore_case = 'ignorecase'
 
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
 " Plugin key-mappings.
 inoremap <expr><C-g>     deoplete#mappings#undo_completion()
 inoremap <expr><C-l>     deoplete#mappings#complete_common_string()
@@ -38,11 +28,11 @@ hi Pmenu ctermbg=238 ctermfg=251
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-  "return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
   " For no inserting <CR> key.
   return pumvisible() ? "\<C-y>" : "\<CR>"
-
 endfunction
+
+
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
@@ -50,13 +40,18 @@ let g:deoplete#sources#clang#sort_algo = 'priority'
 let g:deoplete#sources#clang#libclang_path = "/usr/lib/libclang.so"
 let g:deoplete#sources#clang#clang_header ="/usr/include/clang/"
 
-inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+map <C-t> :w!<CR>:!aspell check %<CR>:e! %<CR>
 
 set completeopt+=menuone,noinsert
 set completeopt-=preview
 
 filetype plugin indent on
 
+autocmd! QuitPre * let g:neomake_verbose = 0
+
+" Ghc-bugs out with GHC-8. 
 "autocmd! BufWritePost,BufEnter * Neomake
 
 nnoremap <C-c> :%y+<CR>
@@ -88,4 +83,3 @@ hi StatusLine ctermfg=242
 hi Search ctermbg=NONE
 hi SignColumn ctermbg=130
 hi WarningMsg ctermbg=NONE ctermfg=220
-"hi ErrorMsg ctermbg=130 ctermfg=1
