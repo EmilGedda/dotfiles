@@ -2,5 +2,5 @@
 !!! Application specific settings to include
 
 #include "Xresources.d/urxvt"
-#include "Xresources.d/xscreensaver"
+!! #include "Xresources.d/xscreensaver"
 
