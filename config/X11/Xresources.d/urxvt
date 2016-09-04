@@ -39,13 +39,14 @@ URxvt.matcher.button:		1
 URxvt.resize-font.smaller: C-Down
 URxvt.resize-font.bigger: C-Up
 
+
 !!! Font settings
 Xft.antialias:			true
 Xft.hintstyle:			hintfull
 Xft.autohint:			true
 Xft.hinting:			true
-URxvt.font:			    xft:Droid Sans Mono:pixelsize=11:Regular
-URxvt.letterspace:		-1
+URxvt.font:			    xft:Droid Sans Mono for Powerline:pixelsize=12:Regular:antialias=true:hinting=true,xft:PowerlineSymbols:Regular:pixelsize=11
+! URxvt.letterspace:		-1
 
 !!! Current color scheme
 #include "colorschemes/hybrid"

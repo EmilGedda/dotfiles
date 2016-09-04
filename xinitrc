@@ -4,9 +4,9 @@
 rm -f /tmp/wallpaper-pid
 
 xrandr --output DVI-I-1 --dpi 92
-
+xset +fp /home/emil/.local/share/fonts
 sxhkd &
 urxvt &
 xsetroot -cursor_name left_ptr
-xscreensaver -no-splash & 
+xscreensaver -no-splash &
 exec bspwm
