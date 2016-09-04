@@ -13,3 +13,6 @@
 [submodule "config/nvim/plugged/vim-sensible"]
 	path = config/nvim/plugged/vim-sensible
 	url = git@github.com:tpope/vim-sensible.git
+[submodule "config/nvim/plugged/vim-online-thesaurus"]
+	path = config/nvim/plugged/vim-online-thesaurus
+	url = git@github.com:beloglazov/vim-online-thesaurus.git
