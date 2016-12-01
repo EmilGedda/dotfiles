@@ -61,7 +61,7 @@ filetype plugin indent on
 autocmd! QuitPre * let g:neomake_verbose = 0
 
 " Ghc-bugs out with GHC-8.
-" autocmd! BufWritePost,BufEnter * Neomake
+" autocmd! BufWritePost * Neomake
 
 nnoremap <C-c> :%y+<CR>
 xnoremap <C-c> :y+<CR>

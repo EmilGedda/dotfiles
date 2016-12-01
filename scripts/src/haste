@@ -1,0 +1,7 @@
+#!/bin/zsh
+for file in "$@"; do
+    KEY=$(curl -s --data-binary "@-" hastebin.com/documents < $file | grep -Po ':"\K[^"]+')
+    TXT+=$(echo "http://hastebin.com/${KEY}.${file:e}" | sed 's/\.$//')$'\n'
+done
+echo -n "$TXT" | xclip -r -i -sel clip
+echo -n "$TXT"

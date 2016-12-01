@@ -1,4 +1,8 @@
 #! /bin/sh
+bspc pointer_modifier mod1
+bspc pointer_action1 move
+bspc pointer_action2 resize_side
+bspc pointer_action3 resize_corner
 
 bspc config border_width        2
 bspc config window_gap          40
@@ -8,6 +12,7 @@ bspc config borderless_monocle  true
 bspc config gapless_monocle     false
 bspc config focus_by_distance   true
 bspc config history_aware_focus true
+bspc config click_to_focus true
 
 bspc monitor DVI-I-1 -d I II III IV 
 bspc monitor DVI-D-0 -d V VI VII VIII
