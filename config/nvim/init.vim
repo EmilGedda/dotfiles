@@ -15,6 +15,7 @@ Plug 'beloglazov/vim-online-thesaurus'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
+Plug 'jiangmiao/auto-pairs'
 
 call plug#end()
 
@@ -65,6 +66,7 @@ autocmd! QuitPre * let g:neomake_verbose = 0
 
 nnoremap <C-c> :%y+<CR>
 xnoremap <C-c> :y+<CR>
+cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
 
 set nu
 set smartcase
@@ -72,6 +74,8 @@ set undofile
 set undodir=/tmp/emil/nvim/undo
 set undolevels=1000
 set undoreload=10000
+set inccommand=nosplit
+set hidden
 
 let g:neomake_list_height	= 8
 let g:neomake_open_list		= 2
@@ -84,8 +88,8 @@ let g:neomake_warning_sign 	= {
     \ 'texthl': 'WarningMsg'
     \ }
 
-let g:neomake_cpp_enable_markers=['clang']
-let g:neomake_cpp_clang_args = ["-std=c++11", "-Wextra", "-Wall", "-g"]
+let g:neomake_cpp_enabled_makers=['clang']
+let g:neomake_cpp_clang_args = ["-std=c++14", "-Wextra", "-Wall", "-g"]
 
 set tabstop=4 softtabstop=4 expandtab shiftwidth=4 smarttab
 hi StatusLine ctermfg=242
@@ -101,3 +105,8 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 set noshowmode
 set showtabline=2
 set laststatus=2
+
+map <F5> :w <bar> :Neomake<CR>
+set guicursor=n-c:hor5-blinkon0
+set mouse=a
+au VimLeave * set guicursor=a:hor5-blinkon0

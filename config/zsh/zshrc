@@ -15,7 +15,7 @@ alias vi=nvim
 alias chrome=google-chrome-stable
 alias mutt="mutt -F $XDG_CONFIG_HOME/mutt/muttrc"
 alias fuckoff="pkill chrome; poweroff"
-alias openhattis="hattis -c ~/.config/hattis/openkattisrc"
+alias openhattis='hattis -c ~/.config/hattis/openkattisrc -f $PWD(:t:l:gs/ //:gs/-/)'
 
 export EDITOR=nvim
 export PAGER=less
