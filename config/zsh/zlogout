@@ -1,0 +1,9 @@
+# Unmount KTH (and remove kerberos tickes)
+~/KTH/umount_kth.sh &
+
+# Print the message.
+#cat <<-EOF
+#
+#Thank you. Come again!
+#  -- Dr. Apu Nahasapeemapetilon
+#EOF

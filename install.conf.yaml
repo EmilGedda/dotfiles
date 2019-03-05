@@ -1,0 +1,17 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+
+- link:
+    ~/.config/zsh/prompt_lambda_setup: config/zsh/prompt_lambda_setup
+    ~/.config/zsh/.zshrc: config/zsh/zshrc
+    ~/.config/zsh/.zshenv: config/zsh/zshenv
+    ~/.config/zsh/.zlogout: config/zsh/zlogout
+    ~/.config/zsh/.zlogin: config/zsh/zlogin
+    ~/.config/zsh/.zpreztorc: config/zsh/zpreztorc
+
+- clean: ['~']
+
+- shell:
+        - [git submodule update --init --recursive, Installing submodules]
