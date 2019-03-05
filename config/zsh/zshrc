@@ -60,3 +60,5 @@ export XAUTHORITY="$XDG_CONFIG_HOME/X11/Xauthority"
 
 export PATH=$PATH:$HOME/.cabal/bin
 export PATH=$PATH:$HOME/.local/bin
+
+xrdb -merge -I$XDG_CONFIG_HOME/X11/Xresources.d $XDG_CONFIG_HOME/X11/Xresources

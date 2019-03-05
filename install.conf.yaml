@@ -10,6 +10,7 @@
     ~/.config/zsh/.zlogout: config/zsh/zlogout
     ~/.config/zsh/.zlogin: config/zsh/zlogin
     ~/.config/zsh/.zpreztorc: config/zsh/zpreztorc
+    ~/.config/X11: config/X11
 
 - clean: ['~']
 
