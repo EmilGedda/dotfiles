@@ -11,6 +11,7 @@
     ~/.config/zsh/.zlogin: config/zsh/zlogin
     ~/.config/zsh/.zpreztorc: config/zsh/zpreztorc
     ~/.config/X11: config/X11
+    ~/.config/nvim: config/nvim
 
 - clean: ['~']
 

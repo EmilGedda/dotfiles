@@ -1,3 +1,42 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
+[submodule "config/nvim/plugged/auto-pairs"]
+	path = config/nvim/plugged/auto-pairs
+	url = git@github.com:jiangmiao/auto-pairs.git
+[submodule "config/nvim/plugged/deoplete.nvim"]
+	path = config/nvim/plugged/deoplete.nvim
+	url = git@github.com:Shougo/deoplete.nvim.git
+[submodule "config/nvim/plugged/deoplete-clang"]
+	path = config/nvim/plugged/deoplete-clang
+	url = git@github.com:deoplete-plugins/deoplete-clang.git
+[submodule "config/nvim/plugged/neomake"]
+	path = config/nvim/plugged/neomake
+	url = git@github.com:neomake/neomake.git
+[submodule "config/nvim/plugged/vim-airline"]
+	path = config/nvim/plugged/vim-airline
+	url = git@github.com:vim-airline/vim-airline.git
+[submodule "config/nvim/plugged/vim-airline-themes"]
+	path = config/nvim/plugged/vim-airline-themes
+	url = git@github.com:vim-airline/vim-airline-themes.git
+[submodule "config/nvim/plugged/vim-fugitive"]
+	path = config/nvim/plugged/vim-fugitive
+	url = git@github.com:tpope/vim-fugitive.git
+[submodule "config/nvim/plugged/vim-gitgutter"]
+	path = config/nvim/plugged/vim-gitgutter
+	url = git@github.com:airblade/vim-gitgutter.git
+[submodule "config/nvim/plugged/vimproc.vim"]
+	path = config/nvim/plugged/vimproc.vim
+	url = git@github.com:Shougo/vimproc.vim.git
+[submodule "config/nvim/plugged/vim-sensible"]
+	path = config/nvim/plugged/vim-sensible
+	url = git@github.com:tpope/vim-sensible.git
+[submodule "config/nvim/plugged/ghcmod-vim"]
+	path = config/nvim/plugged/ghcmod-vim
+	url = git@github.com:eagletmt/ghcmod-vim.git
+[submodule "config/nvim/plugged/neco-ghc"]
+	path = config/nvim/plugged/neco-ghc
+	url = git@github.com:eagletmt/neco-ghc.git
+[submodule "vim-online-thesaurus"]
+	path = vim-online-thesaurus
+	url = git@github.com:beloglazov/vim-online-thesaurus.git
