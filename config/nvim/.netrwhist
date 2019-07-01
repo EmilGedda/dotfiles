@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/Users/emil/dev/kubernetes/content-manager/templates/service'
+let g:netrw_dirhist_2='/Users/emil/dev/kubernetes/lesson/templates'
+let g:netrw_dirhist_3='/Users/emil/dev/kubernetes/lesson/templates/deployment'
+let g:netrw_dirhist_4='/Users/emil/dev/discovery-service/internal/pkg/discovery/api'
+let g:netrw_dirhist_5='/Users/emil/dev/ctx.doc'
+let g:netrw_dirhist_6='/Users/emil/dev/ctx.doc/data'

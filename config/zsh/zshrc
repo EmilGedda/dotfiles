@@ -1,9 +1,14 @@
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
+
 alias vim=nvim
 alias vi=nvim
 alias openhattis='hattis -c ~/.config/hattis/openkattisrc -f $PWD(:t:l:gs/ //:gs/-/)'
+
+alias stop-containers='docker stop $(docker ps -aq)'
+alias remove-containers='docker rm $(docker ps -aq)'
+alias remove-images='docker rmi $(docker images -q)'
 
 export EDITOR=nvim
 export PAGER=less
@@ -34,6 +39,11 @@ function silence(){
   eval "$*" &>/dev/null 
 } 
 
+# If using ksh run bashef (bash + ef) to get the right shell.
+function bashef () {
+  bash -rcfile <(echo 'source ~/.bash_profile')
+}
+
 function prepend-sudo {
   if [[ $BUFFER != "sudo "* ]]; then
     BUFFER="sudo $BUFFER"; CURSOR+=5
@@ -60,5 +70,4 @@ export XAUTHORITY="$XDG_CONFIG_HOME/X11/Xauthority"
 
 export PATH=$PATH:$HOME/.cabal/bin
 export PATH=$PATH:$HOME/.local/bin
-
-xrdb -merge -I$XDG_CONFIG_HOME/X11/Xresources.d $XDG_CONFIG_HOME/X11/Xresources
+source /usr/local/bin/virtualenvwrapper.sh

@@ -5,27 +5,20 @@ call plug#begin('~/.config/nvim/plugged')
 
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-fugitive'
-Plug 'benekastah/neomake'
-Plug 'eagletmt/ghcmod-vim'
-Plug 'Shougo/vimproc.vim'
-Plug 'eagletmt/neco-ghc'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'beloglazov/vim-online-thesaurus'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'morhetz/gruvbox'
-Plug 'lervag/vimtex'
-Plug 'matze/vim-tex-fold'
-Plug 'Quramy/vim-js-pretty-template'
-Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
-Plug 'leafgarland/typescript-vim'
 Plug 'ryanoasis/vim-devicons'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
 Plug 'Shougo/neosnippet.vim'
+Plug 'fatih/vim-go', { 'tag': '*', 'do': ':GoUpdateBinaries' }
 Plug 'Shougo/neosnippet-snippets'
 
 call plug#end()
@@ -67,7 +60,17 @@ let g:LanguageClient_serverCommands = {
 
 let g:LanguageClient_autoStart = 1
 
+" Golang stuff
+let g:go_auto_type_info = 1
+let g:go_fmt_command = "goimports"
+let g:go_auto_sameids = 1
+let g:go_addtags_transform = "snakecase"
+
 "let g:neosnippet#snippets_directory='~/.config/nvim/snippets/'
+
+call deoplete#custom#option('omni_patterns', {
+\ 'go': '[^. *\t]\.\w*',
+\})
 
 " Plugin key-mappings.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
@@ -141,7 +144,7 @@ cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W')
 set nu
 set smartcase
 set undofile
-set undodir=/tmp/emil/nvim/undo
+set undodir=/Users/emil/.cache/nvim/undo
 set undolevels=1000
 set undoreload=10000
 set inccommand=nosplit
@@ -188,3 +191,40 @@ nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 set guicursor=n-c:hor5-blinkon0
 set mouse=a
 au VimLeave * set guicursor=a:hor5-blinkon0
+
+
+" iamcco/markdown-preview.nvim 
+
+" set to 1, the nvim will auto close current preview window when change
+" from markdown buffer to another buffer
+" default: 1
+let g:mkdp_auto_close = 0
+
+" specify browser to open preview page
+" default: ''
+let g:mkdp_browser = ''
+
+" options for markdown render
+" mkit: markdown-it options for render
+" katex: katex options for math
+" uml: markdown-it-plantuml options
+" maid: mermaid options
+" disable_sync_scroll: if disable sync scroll, default 0
+" sync_scroll_type: 'middle', 'top' or 'relative', default value is 'middle'
+"   middle: mean the cursor position alway show at the middle of the preview page
+"   top: mean the vim top viewport alway show at the top of the preview page
+"   relative: mean the cursor position alway show at the relative positon of the preview page
+" hide_yaml_meta: if hide yaml metadata, default is 1
+let g:mkdp_preview_options = {
+    \ 'mkit': {},
+    \ 'katex': {},
+    \ 'uml': {},
+    \ 'maid': {},
+    \ 'disable_sync_scroll': 0,
+    \ 'sync_scroll_type': 'middle',
+    \ 'hide_yaml_meta': 1
+    \ }
+
+" preview page title
+" ${name} will be replace with the file name
+let g:mkdp_page_title = '「${name}」'
