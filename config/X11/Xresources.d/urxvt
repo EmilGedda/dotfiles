@@ -45,8 +45,7 @@ Xft.antialias:			true
 Xft.hintstyle:			hintfull
 Xft.autohint:			true
 Xft.hinting:			true
-URxvt.font:			    xft:Droid Sans Mono Slashed for Powerline:pixelsize=12:Regular:antialias=true:hinting=true, xft:DroidSansMono Nerd Font Mono:Regular:pixelsize=11
-URxvt.letterspace:		1
+URxvt.font:			    xft:DroidSansMono Nerd Font Mono:size=11
 
 !!! Current color scheme
 #include "colorschemes/hybrid"

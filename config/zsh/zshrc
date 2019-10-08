@@ -4,6 +4,7 @@ fi
 alias vim=nvim
 alias vi=nvim
 alias openhattis='hattis -c ~/.config/hattis/openkattisrc -f $PWD(:t:l:gs/ //:gs/-/)'
+alias dmesg=dmesg -L=always
 
 export EDITOR=nvim
 export PAGER=less
@@ -30,17 +31,23 @@ compinit
 autoload -Uz promptinit
 promptinit
 
-function silence(){ 
-  eval "$*" &>/dev/null 
-} 
+function silence {
+  eval "$*" &>/dev/null
+}
 
 function prepend-sudo {
   if [[ $BUFFER != "sudo "* ]]; then
     BUFFER="sudo $BUFFER"; CURSOR+=5
   fi
-
 }
-zle -N prepend-sudo 
+
+function nowrap {
+    setterm -linewrap off
+    eval "$@"
+    setterm -linewrap on
+}
+
+zle -N prepend-sudo
 bindkey "^[s" prepend-sudo
 
 #bindkey "^[^[[C" forward-word     # Ctrl+right  => forward word
@@ -58,7 +65,5 @@ export LESSHISTFILE=/dev/null
 export XDG_CACHE_DIR="$HOME/.cache"
 export XAUTHORITY="$XDG_CONFIG_HOME/X11/Xauthority"
 
-export PATH=$PATH:$HOME/.cabal/bin
 export PATH=$PATH:$HOME/.local/bin
-
-xrdb -merge -I$XDG_CONFIG_HOME/X11/Xresources.d $XDG_CONFIG_HOME/X11/Xresources
+export PATH=$PATH:$HOME/.cabal/bin

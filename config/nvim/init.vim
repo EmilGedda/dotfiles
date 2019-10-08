@@ -1,25 +1,24 @@
 let mapleader = ","
 set encoding=utf-8
 
+" Auto install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-fugitive'
 Plug 'benekastah/neomake'
-Plug 'eagletmt/ghcmod-vim'
 Plug 'Shougo/vimproc.vim'
-Plug 'eagletmt/neco-ghc'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'beloglazov/vim-online-thesaurus'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'morhetz/gruvbox'
-Plug 'lervag/vimtex'
-Plug 'matze/vim-tex-fold'
-Plug 'Quramy/vim-js-pretty-template'
-Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
-Plug 'leafgarland/typescript-vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -141,7 +140,7 @@ cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W')
 set nu
 set smartcase
 set undofile
-set undodir=/tmp/emil/nvim/undo
+set undodir=/home/emil/.cache/nvim/undo
 set undolevels=1000
 set undoreload=10000
 set inccommand=nosplit
