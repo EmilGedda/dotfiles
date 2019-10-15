@@ -1,0 +1,7 @@
+- link:
+    /etc/pacman.d/hooks: etc/pacman.d/hooks
+
+- clean: ['~']
+
+- shell:
+        - [git submodule update --init --recursive, Installing submodules]
