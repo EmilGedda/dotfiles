@@ -10,3 +10,4 @@
 
 - shell:
         - [git submodule update --init --recursive, Installing submodules]
+        - [ln -sf ~/.config/zsh/prompt_*_setup ~/.config/zsh/.zprezto/modules/prompt/functions/, Installing zsh theme]

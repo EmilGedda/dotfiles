@@ -1,1 +1,7 @@
+config/chromium
+config/dconf
+config/hattis
+config/pulse
 config/nvim/plugged/
+config/zsh/histfile
+config/zsh/.zcompdump

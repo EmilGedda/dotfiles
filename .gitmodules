@@ -40,3 +40,6 @@
 [submodule "vim-online-thesaurus"]
 	path = vim-online-thesaurus
 	url = git@github.com:beloglazov/vim-online-thesaurus.git
+[submodule "config/zsh/.zprezto"]
+	path = config/zsh/.zprezto
+	url = git@github.com:sorin-ionescu/prezto.git
