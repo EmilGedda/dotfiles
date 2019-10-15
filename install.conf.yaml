@@ -4,14 +4,7 @@
       relink: true
 
 - link:
-    ~/.config/zsh/prompt_lambda_setup: config/zsh/prompt_lambda_setup
-    ~/.config/zsh/.zshrc: config/zsh/zshrc
-    ~/.config/zsh/.zshenv: config/zsh/zshenv
-    ~/.config/zsh/.zlogout: config/zsh/zlogout
-    ~/.config/zsh/.zlogin: config/zsh/zlogin
-    ~/.config/zsh/.zpreztorc: config/zsh/zpreztorc
-    ~/.config/X11: config/X11
-    ~/.config/nvim: config/nvim
+    ~/.config: config
 
 - clean: ['~']
 
