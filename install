@@ -1,5 +1,5 @@
 #!/bin/sh
-printf "========INSTALLING SYSTEM CONFIGURATION========\n"
-sudo ./install-system-config
 printf "\n========INSTALLING USER CONFIGURATION========\n"
 ./install-user-config
+printf "========INSTALLING SYSTEM CONFIGURATION========\n"
+sudo ./install-system-config

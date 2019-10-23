@@ -5,3 +5,4 @@
 
 - shell:
         - [git submodule update --init --recursive, Installing submodules]
+        - [trust anchor --store certificates/openwrt-lan.crt, Trusting router certificate]

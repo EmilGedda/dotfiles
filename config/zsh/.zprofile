@@ -31,7 +31,8 @@ fi
 # Ensure path arrays do not contain duplicates.
 typeset -gU cdpath fpath mailpath path
 
-export GNUPGHOME=$XDG_CONFIG_HOME/gnupg
+export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
+[ ! -d "$GNUPGHOME" ] && mkdir "$GNUPGHOME" && chmod 700 "$GNUPGHOME"
 
 # Set the the list of directories that cd searches.
 # cdpath=(
