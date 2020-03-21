@@ -1,5 +1,8 @@
 - link:
     ~/.config: config
+- link:
+    ~/.irssi: home/irssi
+
 
 - clean: ['~']
 

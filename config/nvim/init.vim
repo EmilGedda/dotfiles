@@ -26,8 +26,15 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 
 call plug#end()
+
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
 
 " Save current view settings on a per-window, per-buffer basis.
 function! AutoSaveWinView()
@@ -59,12 +66,12 @@ endif
 " Make escape work in the Neovim terminal.
 tnoremap <Esc> <C-\><C-n>
 
+let g:LanguageClient_serverStderr = '/tmp/clangd.stderr'
+
 " Language server
 let g:LanguageClient_serverCommands = {
   \ 'cpp': ['clangd'],
   \ }
-
-let g:LanguageClient_autoStart = 1
 
 "let g:neosnippet#snippets_directory='~/.config/nvim/snippets/'
 
@@ -114,8 +121,6 @@ nnoremap <M-w> :TSRefs<CR>
 nnoremap <M-e> :TSType<CR>
 
 let g:deoplete#sources#clang#sort_algo = 'priority'
-let g:deoplete#sources#clang#libclang_path = "/usr/lib/libclang.so"
-let g:deoplete#sources#clang#clang_header ="/usr/include/clang/"
 
 "inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
@@ -157,8 +162,8 @@ let g:neomake_warning_sign 	= {
     \ 'texthl': 'WarningMsg'
     \ }
 
-let g:neomake_cpp_enabled_makers=['clang']
-let g:neomake_cpp_clang_args = ["-std=c++14", "-Wextra", "-Wall", "-g"]
+let g:neomake_cpp_enabled_makers=['clang++']
+let g:neomake_cpp_clang_args = ["-std=c++17", "-Wextra", "-Wall", "-g"]
 
 set tabstop=4 softtabstop=4 expandtab shiftwidth=4 smarttab
 hi StatusLine ctermfg=242

@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/home/emil/dev/libdht/bin/doc/docs/doxygen/man/man3'
+let g:netrw_dirhist_6='/home/emil/dev/libdht/src'
+let g:netrw_dirhist_5='/home/emil/dev/libdht/lib'
+let g:netrw_dirhist_4='/home/emil/dev/libdht/inc/dht'
+let g:netrw_dirhist_3='/home/emil/dev/libdht/cmake'
+let g:netrw_dirhist_2='/home/emil/dev/opt/bin/leap-years/CMakeFiles'
+let g:netrw_dirhist_1='/home/emil/.cache/yay/arm-linux-gnueabihf-glibc-headers'
+let g:netrw_dirhist_0='/tmp/CI/.github/workflows'
+let g:netrw_dirhist_9='/home/emil/dev/Advent-of-Code-2019/src/02'
+let g:netrw_dirhist_8='/home/emil/dev/Advent-of-Code-2019/lib'
