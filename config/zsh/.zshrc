@@ -11,6 +11,7 @@ alias dmesg=dmesg -L=always
 export EDITOR=nvim
 export PAGER=less
 export FONTCONFIG_PATH=/etc/fonts
+export GO111MODULE=on
 
 # Customize to your needs...
 # Lines configured by zsh-newuser-install
@@ -47,6 +48,12 @@ function nowrap {
     setterm -linewrap off
     eval "$@"
     setterm -linewrap on
+}
+
+function expfactor {
+    factor $@ | while read line; do
+        echo $line | tr ' ' '\n' | uniq -c | awk --lint '!/:/{print $2"^"$1};/:/{print $2}' | tr '\n' ' ' | xargs
+    done
 }
 
 zle -N prepend-sudo

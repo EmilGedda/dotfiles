@@ -1,0 +1,13 @@
+#!/bin/bash
+
+filters=(
+    's;\(https://open.spotify.com/.*\)?si=.*;\1;'
+)
+
+while clipnotify; do
+    for clip in "-p" "-b"; do
+        TEXT=$(xsel -o "$clip")
+        [ $? -ne 0 ] || [[ "$TEXT" = *[![:ascii:]]* ]] || [ -z "$TEXT" ] && continue
+        sed $(printf -- '-e %s ' "${filters[@]}") <<< "$TEXT" | xsel -i "$clip"
+    done
+done
