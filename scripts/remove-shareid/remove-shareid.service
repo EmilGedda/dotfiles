@@ -1,0 +1,10 @@
+[Unit]
+Description=Filters unwanted text from the clipboard
+
+[Service]
+ExecStart=/usr/bin/clean-clipboard
+RestartSec=5
+Restart=always
+
+[Install]
+WantedBy=default.target
