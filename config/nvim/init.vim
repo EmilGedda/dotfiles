@@ -31,7 +31,10 @@ call plug#end()
 
 let g:go_def_mapping_enabled = 0
 let g:go_bin_path = $HOME."/go/bin"
-
+let g:go_doc_keywordprg_enabled = 0
+let g:go_fmt_command = "goimports"
+let g:go_imports_autosave = 0
+let g:go_fmt_options = "-local github.com/EmilGedda"
 
 fun! TrimWhitespace()
     let l:save = winsaveview()
@@ -78,12 +81,15 @@ smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 " SuperTab like snippets' behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-    \ "\<Plug>(neosnippet_expand_or_jump)"
-    \: pumvisible() ? "\<C-n>" : "\<TAB>"
+" imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+"     \ "\<Plug>(neosnippet_expand_or_jump)"
+"     \: pumvisible() ? "\<C-n>" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-    \ "\<Plug>(neosnippet_expand_or_jump)"
-    \: "\<TAB>"
+      \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+"     \ "\<Plug>(neosnippet_expand_or_jump)"
+"     \: "\<TAB>"
 
 
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
@@ -93,33 +99,22 @@ hi Pmenu ctermbg=238 ctermfg=251
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  " For no inserting <CR> key.
-  return pumvisible() ? "\<C-y>" : "\<CR>"
-endfunction
+ inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+ function! s:my_cr_function()
+   " For no inserting <CR> key.
+   return pumvisible() ? "\<C-y>" : "\<CR>"
+ endfunction
 
 nnoremap <Tab> :bn<CR>
 nnoremap <S-Tab> :bp<CR>
-nnoremap <leader>d :bp\|bd #<CR>
+nnoremap <leader>bd :bp\|bd #<CR>
 
 " <TAB>: completion.
 " inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
-nnoremap <M-q> :TSDefPreview<CR>
-nnoremap <M-w> :TSRefs<CR>
-nnoremap <M-e> :TSType<CR>
-
-let g:deoplete#sources#clang#sort_algo = 'priority'
-
 "inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
-map <C-t> :w!<CR>:!aspell check %<CR>:e! %<CR>
-
-set completeopt+=menuone,noinsert
-set completeopt-=preview
-
-set updatetime=1000
+set updatetime=300
 
 filetype plugin indent on
 
@@ -199,6 +194,23 @@ set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
 
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
@@ -216,8 +228,8 @@ endfunction
 inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use `[c` and `]c` to navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
+nmap <silent> <leader>df <Plug>(coc-diagnostic-prev)
+nmap <silent> <leader>db <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -226,7 +238,17 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " Use U to show documentation in preview window
-nnoremap <silent> U :call <SID>show_documentation()<CR>
+noremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
@@ -234,6 +256,16 @@ nmap <leader>rn <Plug>(coc-rename)
 " Remap for format selected region
 vmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+
 " Show all diagnostics
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions
