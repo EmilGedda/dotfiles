@@ -49,7 +49,8 @@ Xft.hintstyle:			hintfull
 Xft.autohint:			true
 Xft.hinting:			true
 URxvt.letterSpace:      0
-URxvt.font:			    xft:DroidSansMono Nerd Font Mono:size=11
+URxvt.font:			    xft:DroidSansMono Nerd Font Mono:size=11:minspace=False, xft:DejaVu Sans:size=10
+
 
 !!! Current color scheme
 #include "colorschemes/hybrid"
