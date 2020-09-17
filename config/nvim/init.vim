@@ -1,5 +1,4 @@
 let mapleader = ","
-set encoding=utf-8
 
 " Auto install vim-plug if not found
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -71,7 +70,6 @@ endif
 
 " Make escape work in the Neovim terminal.
 tnoremap <Esc> <C-\><C-n>
-
 "let g:neosnippet#snippets_directory='~/.config/nvim/snippets/'
 
 " Plugin key-mappings.
@@ -151,10 +149,6 @@ let g:neomake_cpp_enabled_makers=['clang++']
 let g:neomake_cpp_clang_args = ["-std=c++17", "-Wextra", "-Wall", "-g"]
 
 set tabstop=4 softtabstop=4 expandtab shiftwidth=4 smarttab
-hi StatusLine ctermfg=242
-hi Search ctermbg=NONE
-hi SignColumn ctermbg=130
-hi WarningMsg ctermbg=NONE ctermfg=220
 
 let g:airline_powerline_fonts = 1
 let g:Powerline_symbols='unicode'
@@ -166,6 +160,7 @@ set showtabline=2
 set laststatus=2
 
 let g:gruvbox_italic=1
+let g:gruvbox_sign_column='bg0'
 colorscheme gruvbox
 
 set guicursor=n-c:hor5-blinkon0
@@ -182,6 +177,7 @@ let g:go_highlight_build_constraints = 1
 " -------------------------------------------------------------------------------------------------
 " coc.nvim default settings
 " -------------------------------------------------------------------------------------------------
+set signcolumn=number
 
 " if hidden is not set, TextEdit might fail.
 set hidden
@@ -191,8 +187,6 @@ set cmdheight=1
 set updatetime=300
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
-" always show signcolumns
-set signcolumn=yes
 
 " Use <c-space> to trigger completion.
 if has('nvim')
@@ -257,14 +251,11 @@ nmap <leader>rn <Plug>(coc-rename)
 vmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder.
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
+" Update signature help on jump placeholder.
+autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Show all diagnostics
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
@@ -282,3 +273,9 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+
+" coc colors"
+
+hi CocErrorHighlight ctermfg=red term=underline
+hi CocWarningHighlight ctermfg=214 term=underline
