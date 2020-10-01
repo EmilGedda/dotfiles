@@ -1,3 +1,4 @@
+let maplocalleader=","
 let mapleader = ","
 
 " Auto install vim-plug if not found
@@ -11,8 +12,6 @@ call plug#begin('~/.config/nvim/plugged')
 
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-fugitive'
-Plug 'benekastah/neomake'
-Plug 'Shougo/vimproc.vim'
 Plug 'fatih/vim-go'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -25,8 +24,31 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'edkolev/tmuxline.vim'
+Plug 'machakann/vim-sandwich'
+Plug 'lervag/vimtex'
 
 call plug#end()
+
+
+let g:xwindow_id = system('xdotool getactivewindow')
+
+let g:tex_flavor = 'latex'
+let g:vimtex_view_method = 'zathura'
+let g:vimtex_compiler_progname = 'nvr'
+let g:vimtex_view_zathura_options = '-l debug'
+
+function! ZathuraHook() abort
+  if exists('b:vimtex.viewer.xwin_id') && b:vimtex.viewer.xwin_id <= 0
+    silent call system('xdotool windowactivate ' . b:vimtex.viewer.xwin_id . ' --sync')
+    silent call system('xdotool windowraise ' . b:vimtex.viewer.xwin_id)
+  endif
+endfunction
+
+augroup vimrc_vimtex
+  autocmd!
+  autocmd User VimtexEventView call ZathuraHook()
+augroup END
+
 
 let g:go_def_mapping_enabled = 0
 let g:go_bin_path = $HOME."/go/bin"
@@ -40,6 +62,8 @@ fun! TrimWhitespace()
     keeppatterns %s/\s\+$//e
     call winrestview(l:save)
 endfun
+
+autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 " Save current view settings on a per-window, per-buffer basis.
 function! AutoSaveWinView()
@@ -116,7 +140,7 @@ set updatetime=300
 
 filetype plugin indent on
 
-autocmd! QuitPre * let g:neomake_verbose = 0
+" autocmd! QuitPre * let g:neomake_verbose = 0
 
 " Ghc-bugs out with GHC-8.
 " autocmd! BufWritePost * Neomake
@@ -134,19 +158,19 @@ set undoreload=10000
 set inccommand=nosplit
 set hidden
 
-let g:neomake_list_height    = 8
-let g:neomake_open_list        = 2
-let g:neomake_error_sign     = {
-    \ 'text': 'x>',
-    \ 'texthl': 'Constant'
-    \ }
-let g:neomake_warning_sign     = {
-    \ 'text': '?>',
-    \ 'texthl': 'WarningMsg'
-    \ }
-
-let g:neomake_cpp_enabled_makers=['clang++']
-let g:neomake_cpp_clang_args = ["-std=c++17", "-Wextra", "-Wall", "-g"]
+" let g:neomake_list_height    = 8
+" let g:neomake_open_list        = 2
+" let g:neomake_error_sign     = {
+"     \ 'text': 'x>',
+"     \ 'texthl': 'Constant'
+"     \ }
+" let g:neomake_warning_sign     = {
+"     \ 'text': '?>',
+"     \ 'texthl': 'WarningMsg'
+"     \ }
+"
+" let g:neomake_cpp_enabled_makers=['clang++']
+" let g:neomake_cpp_clang_args = ["-std=c++17", "-Wextra", "-Wall", "-g"]
 
 set tabstop=4 softtabstop=4 expandtab shiftwidth=4 smarttab
 
@@ -165,7 +189,6 @@ colorscheme gruvbox
 
 set guicursor=n-c:hor5-blinkon0
 set mouse=a
-au VimLeave * set guicursor=a:hor5-blinkon0
 
 let g:go_highlight_structs = 1
 let g:go_highlight_methods = 1
@@ -173,6 +196,7 @@ let g:go_highlight_functions = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_build_constraints = 1
+let g:go_highlight_fields = 1
 
 " -------------------------------------------------------------------------------------------------
 " coc.nvim default settings
@@ -273,9 +297,40 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" List files under CWD
+nnoremap <silent> <space>f  :<C-u>CocList files<CR>
+" Open yank list with preview in normal mode
+nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
+
+" coc colors
+
+function! ExtendHighlight(base, group, add)
+    redir => basehi
+    sil! exe 'highlight' a:base
+    redir END
+    let grphi = split(basehi, '\n')[0]
+    if grphi =~ "links to"
+        let link = split(grphi, ' ')[-1]
+        call ExtendHighlight(link, a:group, a:add)
+        return
+    endif
+    let grphi = substitute(grphi, '^'.a:base.'\s\+xxx', '', '')
+    sil exe 'highlight' a:group grphi a:add
+endfunction
+
+" hi CocErrorHighlight ctermfg=red term=underline
+
+call ExtendHighlight('CocErrorSign',   'ErrorVirtualText',   'cterm=italic')
+call ExtendHighlight('CocWarningSign', 'WarningVirtualText', 'cterm=italic')
+call ExtendHighlight('CocInfoSign',    'InfoVirtualText',    'cterm=italic')
+call ExtendHighlight('CocHintSign',    'HintVirtualText',    'cterm=italic')
+
+hi link CocErrorVirtualText   ErrorVirtualText
+hi link CocWarningVirtualText WarningVirtualText
+hi link CocInfoVirtualText    InfoVirtualText
+hi link CocHintVirtualText    HintVirtualText
 
 
-" coc colors"
-
-hi CocErrorHighlight ctermfg=red term=underline
-hi CocWarningHighlight ctermfg=214 term=underline
+"hi CocErrorVirtualText cterm=italic
+"hi CocInfoVirtualText cterm=italic
+"hi CocHintVirtualText cterm=italic
