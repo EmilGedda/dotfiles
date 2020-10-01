@@ -74,5 +74,6 @@ export LESSHISTFILE=/dev/null
 export XDG_CACHE_DIR="$HOME/.cache"
 export XAUTHORITY="$XDG_CONFIG_HOME/X11/Xauthority"
 
-export PATH=$PATH:$HOME/.local/bin
-export PATH=$PATH:$HOME/.cabal/bin
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.cabal/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
