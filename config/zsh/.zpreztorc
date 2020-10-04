@@ -84,6 +84,10 @@ zstyle ':prezto:module:editor' dot-expansion 'yes'
 #
 # Prompt
 #
+fpath=(
+  ${ZDOTDIR}/themes
+  ${fpath}
+)
 
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
