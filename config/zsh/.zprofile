@@ -39,9 +39,7 @@ export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
 #   $cdpath
 # )
 
-# LemnBoys Bar options  
-export PANEL_FIFO="/tmp/panel-fifo"
-export PATH=$PATH:~/.config/bar
+export PATH=$PATH:/usr/sbin:/sbin
 
 # Set the list of directories that Zsh searches for programs.
 path=(

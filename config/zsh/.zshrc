@@ -5,6 +5,7 @@ fi
 alias su='su -l'
 alias vim=nvim
 alias vi=nvim
+alias docker=podman
 alias openhattis='hattis -c ~/.config/hattis/openkattisrc -f $PWD(:t:l:gs/ //:gs/-/)'
 alias dmesg=dmesg -L=always
 
@@ -40,7 +41,8 @@ function silence {
 
 function prepend-sudo {
   if [[ $BUFFER != "sudo "* ]]; then
-    BUFFER="sudo $BUFFER"; CURSOR+=5
+    BUFFER="sudo $BUFFER"
+    CURSOR+=5
   fi
 }
 
@@ -74,6 +76,12 @@ export LESSHISTFILE=/dev/null
 export XDG_CACHE_DIR="$HOME/.cache"
 export XAUTHORITY="$XDG_CONFIG_HOME/X11/Xauthority"
 
-export PATH="$HOME/.local/bin:$PATH"
+export TEXMFDIST="/usr/share/texmf-dist"
+
+export PATH="/usr/bin/vendor_perl:$PATH"
+export PATH="$HOME/.ghcup/bin:$PATH"
 export PATH="$HOME/.cabal/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
+
+

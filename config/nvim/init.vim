@@ -20,15 +20,24 @@ Plug 'morhetz/gruvbox'
 Plug 'ryanoasis/vim-devicons'
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'HerringtonDarkholme/yats.vim'
+Plug 'maxmellon/vim-jsx-pretty'
 Plug 'edkolev/tmuxline.vim'
 Plug 'machakann/vim-sandwich'
 Plug 'lervag/vimtex'
+Plug 'neovimhaskell/haskell-vim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+Plug 'vmchale/dhall-vim'
 
 call plug#end()
 
+command Term :set nonu | startinsert | term
+cabbrev term Term
+
+let g:markdown_fenced_languages = ['haskell']
+
+set re=0
 
 let g:xwindow_id = system('xdotool getactivewindow')
 
@@ -37,12 +46,21 @@ let g:vimtex_view_method = 'zathura'
 let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_view_zathura_options = '-l debug'
 
+let g:vimtex_quickfix_ignore_filters = [
+      \ 'Marginpar on page',
+      \ 'Overfull \\hbox',
+      \ 'Underfull \\hbox',
+      \ '.*\\nonfrenchspacing is active',
+      \]
+
 function! ZathuraHook() abort
   if exists('b:vimtex.viewer.xwin_id') && b:vimtex.viewer.xwin_id <= 0
     silent call system('xdotool windowactivate ' . b:vimtex.viewer.xwin_id . ' --sync')
     silent call system('xdotool windowraise ' . b:vimtex.viewer.xwin_id)
   endif
 endfunction
+
+
 
 augroup vimrc_vimtex
   autocmd!
@@ -64,6 +82,17 @@ fun! TrimWhitespace()
 endfun
 
 autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
+" Search for the ... arguments separated with whitespace (if no '!'),
+" or with non-word characters (if '!' added to command).
+function! SearchMultiLine(bang, ...)
+  if a:0 > 0
+    let sep = (a:bang) ? '\_W\+' : '\_s\+'
+    let @/ = join(a:000, sep)
+  endif
+endfunction
+command! -bang -nargs=* -complete=tag S call SearchMultiLine(<bang>0, <f-args>)|normal! /<C-R>/<CR>
+
 
 " Save current view settings on a per-window, per-buffer basis.
 function! AutoSaveWinView()
@@ -127,9 +156,16 @@ hi Pmenu ctermbg=238 ctermfg=251
    return pumvisible() ? "\<C-y>" : "\<CR>"
  endfunction
 
+" Tabbing hotkeys
 nnoremap <Tab> :bn<CR>
 nnoremap <S-Tab> :bp<CR>
 nnoremap <leader>bd :bp\|bd #<CR>
+
+" Saving shortcuts
+nnoremap <leader>w :w<CR>
+
+nnoremap <leader>gc :Git<CR>
+nnoremap <leader>gp :Git push<CR>
 
 " <TAB>: completion.
 " inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -151,13 +187,13 @@ xnoremap <C-c> :y+<CR>
 cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
 
 set nu
+set ignorecase
 set smartcase
 set undofile
-set undodir=/home/emil/.cache/nvim/undo
+set undodir=~/.cache/nvim/undo
 set undolevels=1000
 set undoreload=10000
 set inccommand=nosplit
-set hidden
 
 " let g:neomake_list_height    = 8
 " let g:neomake_open_list        = 2
@@ -213,6 +249,10 @@ set updatetime=300
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
 
+" dont join with space when autoformatting
+set nojs
+
+
 " Use <c-space> to trigger completion.
 if has('nvim')
   inoremap <silent><expr> <c-space> coc#refresh()
@@ -246,9 +286,9 @@ endfunction
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Use `[c` and `]c` to navigate diagnostics
-nmap <silent> <leader>df <Plug>(coc-diagnostic-prev)
-nmap <silent> <leader>db <Plug>(coc-diagnostic-next)
+" Use `,db` and `,df` to navigate diagnostics
+nmap <silent> <leader>df <Plug>(coc-diagnostic-next)
+nmap <silent> <leader>db <Plug>(coc-diagnostic-prev)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -302,6 +342,16 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 nnoremap <silent> <space>f  :<C-u>CocList files<CR>
 " Open yank list with preview in normal mode
 nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
+" grep for pattern recursively under cwd
+nnoremap <silent> <space>g  :<C-u>CocList grep<CR>
+
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>ca <Plug>(coc-codeaction-selected)
+vmap <leader>ca <Plug>(coc-codeaction-selected)
+nmap <leader>cl <Plug>(coc-codelens-action)
+nmap <leader>ol <Plug>(coc-openlink)
+
+
 
 " coc colors
 
@@ -321,16 +371,18 @@ endfunction
 
 " hi CocErrorHighlight ctermfg=red term=underline
 
-call ExtendHighlight('CocErrorSign',   'ErrorVirtualText',   'cterm=italic')
-call ExtendHighlight('CocWarningSign', 'WarningVirtualText', 'cterm=italic')
-call ExtendHighlight('CocInfoSign',    'InfoVirtualText',    'cterm=italic')
-call ExtendHighlight('CocHintSign',    'HintVirtualText',    'cterm=italic')
+" call ExtendHighlight('CocErrorSign',   'ErrorVirtualText',   'cterm=italic')
+" call ExtendHighlight('CocWarningSign', 'WarningVirtualText', 'cterm=italic')
+" call ExtendHighlight('CocInfoSign',    'InfoVirtualText',    'cterm=italic')
+" call ExtendHighlight('CocHintSign',    'HintVirtualText',    'cterm=italic')
 
 hi link CocErrorVirtualText   ErrorVirtualText
 hi link CocWarningVirtualText WarningVirtualText
 hi link CocInfoVirtualText    InfoVirtualText
 hi link CocHintVirtualText    HintVirtualText
 
+hi! link haskellPragma SpecialComment
+hi! link haskellType GruvboxPurple
 
 "hi CocErrorVirtualText cterm=italic
 "hi CocInfoVirtualText cterm=italic
