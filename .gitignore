@@ -5,8 +5,8 @@ config/QtProject.conf
 config/Signal/
 config/Unknown Organization/
 config/chromium
-config/chromium
 config/coc/
+!config/coc/extensions/package.json
 config/configstore/
 config/dconf
 config/discord/
@@ -28,12 +28,10 @@ config/monitors.xml~
 config/nautilus/
 config/nvim/.netrwhist
 config/nvim/after/ftplugin/go.vim
-config/nvim/coc-settings.json
 config/nvim/plugged/
 config/obs-studio/
 config/okularrc
 config/pavucontrol.ini
-config/pulse
 config/pulse
 config/session/
 config/spotify/
@@ -47,3 +45,6 @@ config/zoomus.conf
 config/zsh/.zcompcache/
 config/zsh/.zcompdump*
 config/zsh/histfile
+config/mpv/watch_later
+home/irssi/saved_nick_colors
+home/irssi/config

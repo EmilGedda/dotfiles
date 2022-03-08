@@ -74,6 +74,7 @@ export GREP_COLORS="mt=$GREP_COLOR"
 export LESSHISTSIZE=0
 export LESSHISTFILE=/dev/null
 export XDG_CACHE_DIR="$HOME/.cache"
+export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:/home/emil/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
 export XAUTHORITY="$XDG_CONFIG_HOME/X11/Xauthority"
 
 export TEXMFDIST="/usr/share/texmf-dist"
