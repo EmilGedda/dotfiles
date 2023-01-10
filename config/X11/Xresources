@@ -1,5 +1,0 @@
-
-!!! Application specific settings to include
-
-#include "Xresources.d/urxvt"
-

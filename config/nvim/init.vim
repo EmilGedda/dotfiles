@@ -1,79 +1,68 @@
 let maplocalleader=","
 let mapleader = ","
 
-" Auto install vim-plug if not found
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-fugitive'
-Plug 'fatih/vim-go'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'airblade/vim-gitgutter'
-Plug 'morhetz/gruvbox'
-Plug 'ryanoasis/vim-devicons'
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'maxmellon/vim-jsx-pretty'
-Plug 'edkolev/tmuxline.vim'
+Plug 'mhinz/vim-signify'
+
+Plug 'tomasiser/vim-code-dark'
+
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+
 Plug 'machakann/vim-sandwich'
-Plug 'lervag/vimtex'
-Plug 'neovimhaskell/haskell-vim'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-Plug 'vmchale/dhall-vim'
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'nvim-treesitter/nvim-tree-docs'
+
+
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/nvim-cmp'
+
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
+
+Plug 'nvim-telescope/telescope-ui-select.nvim'
+
+Plug 'danymat/neogen'
+Plug 'junegunn/vim-easy-align'
+
+Plug 'dstein64/vim-startuptime'
+Plug 'nvim-telescope/telescope-file-browser.nvim'
+
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'theHamsta/nvim-dap-virtual-text'
 
 call plug#end()
+
+let &shell = 'pwsh.exe'
+let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
+let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+set shellquote= shellxquote=
 
 command Term :set nonu | startinsert | term
 cabbrev term Term
 
-let g:markdown_fenced_languages = ['haskell']
+let g:signify_priority = 8
 
-set re=0
-
-let g:xwindow_id = system('xdotool getactivewindow')
-
-let g:tex_flavor = 'latex'
-let g:vimtex_view_method = 'zathura'
-let g:vimtex_compiler_progname = 'nvr'
-let g:vimtex_view_zathura_options = '-l debug'
-
-let g:vimtex_quickfix_ignore_filters = [
-      \ 'Marginpar on page',
-      \ 'Overfull \\hbox',
-      \ 'Underfull \\hbox',
-      \ '.*\\nonfrenchspacing is active',
-      \]
-
-function! ZathuraHook() abort
-  if exists('b:vimtex.viewer.xwin_id') && b:vimtex.viewer.xwin_id <= 0
-    silent call system('xdotool windowactivate ' . b:vimtex.viewer.xwin_id . ' --sync')
-    silent call system('xdotool windowraise ' . b:vimtex.viewer.xwin_id)
-  endif
-endfunction
+set fillchars+=vert:\▏
 
 
-
-augroup vimrc_vimtex
-  autocmd!
-  autocmd User VimtexEventView call ZathuraHook()
-augroup END
-
-
-let g:go_def_mapping_enabled = 0
-let g:go_bin_path = $HOME."/go/bin"
-let g:go_doc_keywordprg_enabled = 0
-let g:go_fmt_command = "goimports"
-let g:go_imports_autosave = 0
-let g:go_fmt_options = "-local github.com/EmilGedda"
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 fun! TrimWhitespace()
     let l:save = winsaveview()
@@ -93,6 +82,9 @@ function! SearchMultiLine(bang, ...)
 endfunction
 command! -bang -nargs=* -complete=tag S call SearchMultiLine(<bang>0, <f-args>)|normal! /<C-R>/<CR>
 
+" autocmd TermClose * if !v:event.status | exe 'bdelete! '..expand('<abuf>') | endif
+
+set ssop+=resize,buffers,tabpages,winpos,winsize
 
 " Save current view settings on a per-window, per-buffer basis.
 function! AutoSaveWinView()
@@ -121,44 +113,59 @@ if v:version >= 700
     autocmd BufEnter * call AutoRestoreWinView()
 endif
 
+if has("win32") && has("nvim")
+  nnoremap <C-z> <nop>
+  inoremap <C-z> <nop>
+  vnoremap <C-z> <nop>
+  snoremap <C-z> <nop>
+  xnoremap <C-z> <nop>
+  cnoremap <C-z> <nop>
+  onoremap <C-z> <nop>
+endif
+
 " Make escape work in the Neovim terminal.
 tnoremap <Esc> <C-\><C-n>
-"let g:neosnippet#snippets_directory='~/.config/nvim/snippets/'
-
-" Plugin key-mappings.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets' behavior.
-" imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-"     \ "\<Plug>(neosnippet_expand_or_jump)"
-"     \: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-      \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-"     \ "\<Plug>(neosnippet_expand_or_jump)"
-"     \: "\<TAB>"
-
 
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-au BufRead,BufNewFile *.tsx set filetype=typescriptreact
 
-hi Pmenu ctermbg=238 ctermfg=251
+set completeopt=menu,menuone,noselect
+
+" NOTE: You can use other key to expand snippet.
+
+" Expand
+imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+
+" Expand or jump
+imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+
+" Jump forward or backward
+imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+
+" Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
+" See https://github.com/hrsh7th/vim-vsnip/pull/50
+" nmap        s   <Plug>(vsnip-select-text)
+" xmap        s   <Plug>(vsnip-select-text)
+" nmap        S   <Plug>(vsnip-cut-text)
+" xmap        S   <Plug>(vsnip-cut-text)
+
+" hi Pmenu ctermbg=238 ctermfg=251
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
- inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
- function! s:my_cr_function()
-   " For no inserting <CR> key.
-   return pumvisible() ? "\<C-y>" : "\<CR>"
- endfunction
+"  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+"  function! s:my_cr_function()
+"    " For no inserting <CR> key.
+"    return pumvisible() ? "\<C-y>" : "\<CR>"
+"  endfunction
 
 " Tabbing hotkeys
-nnoremap <Tab> :bn<CR>
-nnoremap <S-Tab> :bp<CR>
+nmap <Tab> :bn<CR>
+nmap <S-Tab> :bp<CR>
 nnoremap <leader>bd :bp\|bd #<CR>
 
 " Saving shortcuts
@@ -176,10 +183,6 @@ set updatetime=300
 
 filetype plugin indent on
 
-" autocmd! QuitPre * let g:neomake_verbose = 0
-
-" Ghc-bugs out with GHC-8.
-
 autocmd! BufWritePost * call TrimWhitespace()
 
 nnoremap <C-c> :%y+<CR>
@@ -195,49 +198,45 @@ set undolevels=1000
 set undoreload=10000
 set inccommand=nosplit
 
-" let g:neomake_list_height    = 8
-" let g:neomake_open_list        = 2
-" let g:neomake_error_sign     = {
-"     \ 'text': 'x>',
-"     \ 'texthl': 'Constant'
-"     \ }
-" let g:neomake_warning_sign     = {
-"     \ 'text': '?>',
-"     \ 'texthl': 'WarningMsg'
-"     \ }
-"
-" let g:neomake_cpp_enabled_makers=['clang++']
-" let g:neomake_cpp_clang_args = ["-std=c++17", "-Wextra", "-Wall", "-g"]
 
-set tabstop=4 softtabstop=4 expandtab shiftwidth=4 smarttab
+let g:signify_sign_change = '~~'
+let g:signify_sign_add = '++'
+let g:signify_sign_delete_first_line = '-'
+let g:signify_sign_show_count = 1
 
-let g:airline_powerline_fonts = 1
-let g:Powerline_symbols='unicode'
-let g:airline#extensions#tabline#enabled = 2
-let g:airline_theme= 'distinguished'
-let g:airline#extensions#tabline#fnamemod = ':t'
+
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+
+set tabstop=4 softtabstop=4 expandtab shiftwidth=4
+
 set noshowmode
 set showtabline=2
 set laststatus=2
 
-let g:gruvbox_italic=1
-let g:gruvbox_sign_column='bg0'
-colorscheme gruvbox
+colorscheme codedark
+
+highlight! GhostText gui=italic guifg=#808080
+
+lua require('config')
+
 
 set guicursor=n-c:hor5-blinkon0
 set mouse=a
 
-let g:go_highlight_structs = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_fields = 1
-
-" -------------------------------------------------------------------------------------------------
-" coc.nvim default settings
-" -------------------------------------------------------------------------------------------------
 set signcolumn=number
 
 " if hidden is not set, TextEdit might fail.
@@ -253,137 +252,119 @@ set shortmess+=c
 set nojs
 
 
-" Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
-
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <leader>fr <cmd>lua require('telescope.builtin').lsp_references()<cr>
+nnoremap <leader>fs <cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+" " Use <c-space> to trigger completion.
+" inoremap <silent><expr> <c-space> coc#refresh()
+"
+" " Use `,db` and `,df` to navigate diagnostics
+" nmap <silent> <leader>df <Plug>(coc-diagnostic-next)
+" nmap <silent> <leader>db <Plug>(coc-diagnostic-prev)
+"
+" " Remap keys for gotos
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
+"
+" " Use U to show documentation in preview window
+" noremap <silent> K :call <SID>show_documentation()<CR>
+"
+" function! s:show_documentation()
+"   if (index(['vim','help'], &filetype) >= 0)
+"     execute 'h '.expand('<cword>')
+"   else
+"     call CocAction('doHover')
+"   endif
+" endfunction
+"
+" autocmd CursorHold * silent call CocActionAsync('highlight')
+"
+" " Remap for rename current word
+" nmap <leader>rn <Plug>(coc-rename)
+"
+" " Remap for format selected region
+" vmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
+"
+" " Update signature help on jump placeholder.
+" autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+"
+" " Apply AutoFix to problem on the current line.
+" nmap <leader>qf  <Plug>(coc-fix-current)
+"
+" " Show all diagnostics
+" nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" " Manage extensions
+" nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" " Show commands
+" nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" " Find symbol of current document
+" nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" " Search workspace symbols
+" nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" " Do default action for next item.
+" nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" " Do default action for previous item.
+" nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" " Resume latest coc list
+" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" " List files under CWD
+" nnoremap <silent> <space>f  :<C-u>CocList files<CR>
+" " Open yank list with preview in normal mode
+" nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
+" " grep for pattern recursively under cwd
+" nnoremap <silent> <space>g  :<C-u>CocList grep<CR>
+"
+" xmap <leader>a  <Plug>(coc-codeaction-selected)
+" nmap <leader>ca <Plug>(coc-codeaction-selected)
+" vmap <leader>ca <Plug>(coc-codeaction-selected)
+" nmap <leader>cl <Plug>(coc-codelens-action)
+" nmap <leader>ol <Plug>(coc-openlink)
+"
 
-" Use `,db` and `,df` to navigate diagnostics
-nmap <silent> <leader>df <Plug>(coc-diagnostic-next)
-nmap <silent> <leader>db <Plug>(coc-diagnostic-prev)
+" gray
+highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#808080
+" blue
+highlight! CmpItemAbbrMatch guibg=NONE guifg=#569CD6
+highlight! CmpItemAbbrMatchFuzzy guibg=NONE guifg=#569CD6
+" light blue
+highlight! CmpItemKindVariable guibg=NONE guifg=#9CDCFE
+highlight! CmpItemKindInterface guibg=NONE guifg=#9CDCFE
+highlight! CmpItemKindText guibg=NONE guifg=#9CDCFE
+" pink
+highlight! CmpItemKindFunction guibg=NONE guifg=#C586C0
+highlight! CmpItemKindMethod guibg=NONE guifg=#C586C0
+" front
+highlight! CmpItemKindKeyword guibg=NONE guifg=#D4D4D4
+highlight! CmpItemKindProperty guibg=NONE guifg=#D4D4D4
+highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4
 
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+highlight VertSplit ctermfg=237
+hi! link TSVariable Normal
+hi! link TSVariableBuiltin Normal
+hi! link TSParameter Normal
+hi! link TSParameterReference Normal
 
-" Use U to show documentation in preview window
-noremap <silent> K :call <SID>show_documentation()<CR>
+highlight SignifySignAdd    guifg=#77982E gui=NONE
+highlight SignifySignDelete guifg=#FF3030 gui=NONE
+highlight SignifySignChange guifg=#F8C82E gui=NONE
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-" Remap for format selected region
-vmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-" Update signature help on jump placeholder.
-autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-
-" Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-" Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-" List files under CWD
-nnoremap <silent> <space>f  :<C-u>CocList files<CR>
-" Open yank list with preview in normal mode
-nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
-" grep for pattern recursively under cwd
-nnoremap <silent> <space>g  :<C-u>CocList grep<CR>
-
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>ca <Plug>(coc-codeaction-selected)
-vmap <leader>ca <Plug>(coc-codeaction-selected)
-nmap <leader>cl <Plug>(coc-codelens-action)
-nmap <leader>ol <Plug>(coc-openlink)
-
-
-
-" coc colors
-
-function! ExtendHighlight(base, group, add)
-    redir => basehi
-    sil! exe 'highlight' a:base
-    redir END
-    let grphi = split(basehi, '\n')[0]
-    if grphi =~ "links to"
-        let link = split(grphi, ' ')[-1]
-        call ExtendHighlight(link, a:group, a:add)
-        return
-    endif
-    let grphi = substitute(grphi, '^'.a:base.'\s\+xxx', '', '')
-    sil exe 'highlight' a:group grphi a:add
-endfunction
-
-" hi CocErrorHighlight ctermfg=red term=underline
-
-" call ExtendHighlight('CocErrorSign',   'ErrorVirtualText',   'cterm=italic')
-" call ExtendHighlight('CocWarningSign', 'WarningVirtualText', 'cterm=italic')
-" call ExtendHighlight('CocInfoSign',    'InfoVirtualText',    'cterm=italic')
-" call ExtendHighlight('CocHintSign',    'HintVirtualText',    'cterm=italic')
-
-hi link CocErrorVirtualText   ErrorVirtualText
-hi link CocWarningVirtualText WarningVirtualText
-hi link CocInfoVirtualText    InfoVirtualText
-hi link CocHintVirtualText    HintVirtualText
-
-hi! link haskellPragma SpecialComment
-hi! link haskellType GruvboxPurple
-
-"hi CocErrorVirtualText cterm=italic
-"hi CocInfoVirtualText cterm=italic
-"hi CocHintVirtualText cterm=italic

@@ -1,5 +1,0 @@
-player=mpv
-player-no-close
-twitch-low-latency
-hls-live-edge=1
-default-stream=best
