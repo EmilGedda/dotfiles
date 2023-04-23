@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=xrdb -merge -I/home/emil/.config/X11/Xresources.d /home/emil/.config/X11/Xresources
+Exec=#xrdb -merge -I/home/emil/.config/X11/Xresources.d /home/emil/.config/X11/Xresources
 Hidden=false
 X-GNOME-Autostart-enabled=true
 Name=xrdb -merge
