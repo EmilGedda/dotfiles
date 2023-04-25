@@ -29,7 +29,11 @@ bindkey -e
 zstyle :compinstall filename "$ZDOTDIR/.zshrc"
 
 autoload -Uz compinit
-compinit
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
+compinit -C
+
 # End of lines added by compinstall
 
 autoload -Uz promptinit
@@ -64,8 +68,8 @@ bindkey "^[s" prepend-sudo
 #bindkey "^[^[[C" forward-word     # Ctrl+right  => forward word
 #bindkey "^[0;d" backward-word    # Ctrl+left   => backward word
 
-bindkey "\e[A" history-beginning-search-backward
-bindkey "\e[B" history-beginning-search-forward
+bindkey '^[OA' history-beginning-search-backward
+bindkey '^[OB' history-beginning-search-forward
 
 # Enforce default grep colos
 export GREP_COLOR="01;31"
@@ -84,5 +88,3 @@ export PATH="$HOME/.ghcup/bin:$PATH"
 export PATH="$HOME/.cabal/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
-
-

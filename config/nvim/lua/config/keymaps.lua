@@ -17,26 +17,26 @@ local function map(mode, lhs, rhs, opts)
     -- do not create the keymap if a lazy keys handler exists
     if not keys.active[keys.parse({ lhs, mode = mode }).id] then
         opts = opts or {}
-        opts.silent = opts.silent ~= false
+        opts.noremap = true
+        opts.silent = true
         vim.keymap.set(mode, lhs, rhs, opts)
     end
 end
 
-local opts = { noremap = true, silent = true }
-map("n", "<space>e", vim.diagnostic.open_float, opts)
-map("n", "<leader>df", vim.diagnostic.goto_next, opts)
-map("n", "<leader>db", vim.diagnostic.goto_prev, opts)
-map("n", "<space>q", vim.diagnostic.setloclist, opts)
+map("n", "<leader>do", vim.diagnostic.open_float, { desc = "Show diagnostic" })
+map("n", "<leader>df", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+map("n", "<leader>db", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
+map("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "Diagnostic in qlist" })
 
 local Util = require("lazyvim.util")
 
-vim.keymap.set("n", "<leader>ft", function()
+map("n", "<leader>ft", function()
     Util.float_term(nil, { cwd = Util.get_root(), border = "single" })
 end, { desc = "Terminal (root dir)" })
 
-vim.keymap.set("n", "<tab>", function()
+map("n", "<tab>", function()
     vim.cmd("bn")
 end, { desc = "Next buffer" })
-vim.keymap.set("n", "<s-tab>", function()
+map("n", "<s-tab>", function()
     vim.cmd("bp")
 end, { desc = "Previous buffer" })
