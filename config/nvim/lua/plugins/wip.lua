@@ -50,23 +50,17 @@ return {
         config = true,
     },
 
-    -- change some telescope options and a keymap to browse plugin files
-    { "nvim-telescope/telescope.nvim" },
-
-    -- add telescope-fzf-native
-    {
-        "telescope.nvim",
-        dependencies = {
-            "nvim-telescope/telescope-fzf-native.nvim",
-            build = "make",
-            config = function()
-                require("telescope").load_extension("fzf")
-            end,
-        },
-    },
-
-    -- add lspconfig
-    { "neovim/nvim-lspconfig" },
+    -- add telescope-fzfnative
+    -- {
+    --     "telescope.nvim",
+    --     dependencies = {
+    --         "nvim-telescope/telescope-fzf-native.nvim",
+    --         build = "make",
+    --         config = function()
+    --             require("telescope").load_extension("fzf")
+    --         end,
+    --     },
+    -- },
 
     -- add treesitter
     {
@@ -92,12 +86,10 @@ return {
                 "vimdoc",
                 "yaml",
             },
-
             highlight = {
                 enable = true,
                 additional_vim_regex_highlighting = false,
             },
-
             tree_docs = { enable = true },
             textobjects = {
                 move = {
@@ -122,10 +114,8 @@ return {
                 },
                 select = {
                     enable = true,
-
                     -- Automatically jump forward to textobj, similar to targets.vim
                     lookahead = true,
-
                     keymaps = {
                         -- You can use the capture groups defined in textobjects.scm
                         ["af"] = "@function.outer",
@@ -148,8 +138,6 @@ return {
             },
         },
     },
-
-    { "nvim-tree/nvim-web-devicons" },
 
     -- or you can return new options to override all the defaults
     {
@@ -180,7 +168,15 @@ return {
                                 require("trouble").toggle()
                             end,
                         },
-                        { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+                        {
+                            "filetype",
+                            icon_only = true,
+                            separator = "",
+                            padding = {
+                                left = 1,
+                                right = 0,
+                            },
+                        },
                         { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
                         {
                             "diff",
@@ -261,11 +257,9 @@ return {
             local cmp = require("cmp")
 
             return {
-
                 completion = {
                     completeopt = "menu,menuone,noinsert",
                 },
-
                 snippet = {
                     expand = function(args)
                         luasnip.lsp_expand(args.body)
@@ -279,18 +273,15 @@ return {
                         return item
                     end,
                 },
-
                 window = {
                     completion = cmp.config.window.bordered(),
                     documentation = cmp.config.window.bordered(),
                 },
-
                 experimental = {
                     ghost_text = {
                         hl_group = "LspCodeLens",
                     },
                 },
-
                 mapping = cmp.mapping.preset.insert({
                     ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
                     ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
