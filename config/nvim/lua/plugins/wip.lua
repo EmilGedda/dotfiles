@@ -39,7 +39,10 @@ return {
         "folke/trouble.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         -- opts will be merged with the parent spec
-        opts = { use_diagnostic_signs = true },
+        opts = {
+            use_diagnostic_signs = true,
+            padding = false,
+        },
     },
 
     -- add symbols-outline
@@ -84,8 +87,27 @@ return {
         },
     },
 
-    -- add lspconfig
-    { "neovim/nvim-lspconfig" },
+    {
+        "folke/noice.nvim",
+        opts = {
+            views = {
+                mini = {
+                    border = {
+                        style = "rounded",
+                    },
+                },
+                hover = {
+                    border = {
+                        style = "rounded",
+                        padding = { 0, 1 },
+                    },
+                },
+            },
+            presets = {
+                lsp_doc_border = true,
+            },
+        },
+    },
 
     -- add treesitter
     {
@@ -277,7 +299,7 @@ return {
             return {
 
                 completion = {
-                    completeopt = "menu,menuone,noinsert",
+                    completeopt = "menu,menuone",
                 },
 
                 snippet = {

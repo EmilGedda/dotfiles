@@ -23,10 +23,18 @@ local function map(mode, lhs, rhs, opts)
     end
 end
 
-map("n", "<leader>do", vim.diagnostic.open_float, { desc = "Show diagnostic" })
-map("n", "<leader>df", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
-map("n", "<leader>db", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
-map("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "Diagnostic in qlist" })
+map("n", "<leader>do", function()
+    vim.diagnostic.open_float({ border = "rounded" })
+end, { desc = "Show diagnostic" })
+map("n", "<leader>df", function()
+    vim.diagnostic.goto_next({ float = { border = "rounded" } })
+end, { desc = "Next diagnostic" })
+map("n", "<leader>db", function()
+    vim.diagnostic.goto_prev({ float = { border = "rounded" } })
+end, { desc = "Previous diagnostic" })
+map("n", "<leader>dq", function()
+    vim.diagnostic.setloclist({ float = { border = "rounded" } })
+end, { desc = "Diagnostic in qlist" })
 
 local Util = require("lazyvim.util")
 
