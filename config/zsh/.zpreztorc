@@ -30,12 +30,12 @@ zstyle ':prezto:load' pmodule \
   'directory' \
   'completion' \
   'prompt' \
-  'archive' # \
+  'archive' \
+  'utility' \
+  'git'
   # 'terminal' \
   # 'spectrum' \
-  #'utility' \
-#  'git'
-#  'gpg' \
+  # 'gpg' \
 
 #
 # Editor

@@ -91,11 +91,6 @@ return {
         "folke/noice.nvim",
         opts = {
             views = {
-                mini = {
-                    border = {
-                        style = "rounded",
-                    },
-                },
                 hover = {
                     border = {
                         style = "rounded",
@@ -269,6 +264,7 @@ return {
         },
     },
 
+    { "echasnovski/mini.indentscope", enabled = false },
     { "echasnovski/mini.surround", enabled = false },
     { "echasnovski/mini.pairs", enabled = false },
     { "echasnovski/mini.ai", enabled = false },

@@ -39,7 +39,7 @@ end, { desc = "Diagnostic in qlist" })
 local Util = require("lazyvim.util")
 
 map("n", "<leader>ft", function()
-    Util.float_term(nil, { cwd = Util.get_root(), border = "single" })
+    Util.float_term(nil, { cwd = Util.get_root(), border = "rounded" })
 end, { desc = "Terminal (root dir)" })
 
 map("n", "<tab>", function()
