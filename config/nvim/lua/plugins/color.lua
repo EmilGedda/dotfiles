@@ -1,8 +1,5 @@
+vim.opt.termguicolors = true
+
 return {
-    {
-        "LazyVim/LazyVim",
-        opts = {
-            colorscheme = "catppuccin-mocha",
-        },
-    },
+    {},
 }
