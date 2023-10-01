@@ -30,7 +30,7 @@ opt.showmode = false -- Dont show mode since we have a statusline
 opt.sidescrolloff = 8 -- Columns of context
 opt.smartcase = true -- Don't ignore case with capitals
 opt.smartindent = true -- Insert indents automatically
-opt.spelllang = { "en", "se" }
+opt.spelllang = { "en" }
 opt.splitbelow = true -- Put new windows below current
 opt.splitright = true -- Put new windows right of current
 opt.tabstop = 2 -- Number of spaces tabs count for
@@ -47,6 +47,10 @@ opt.shortmess:append({ C = true })
 opt.joinspaces = false
 opt.sessionoptions = { "blank", "buffers", "curdir", "folds", "help", "tabpages", "winsize", "winpos", "terminal" }
 opt.softtabstop = 2
+opt.termguicolors = true
+
+-- prevent gitsigns from creating a signcolumn since we use the gutter instead
+vim.cmd("set signcolumn=number")
 
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0

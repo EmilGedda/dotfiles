@@ -23,12 +23,20 @@ return {
   --     require('nordic').load()
   --   end
   -- },
+  -- {
+  --   "folke/tokyonight.nvim",
+  --   lazy = true,
+  --   opts = { style = "moon" },
+  --   init = function()
+  --     vim.cmd.colorscheme("tokyonight")
+  --   end
+  -- },
   {
-    "folke/tokyonight.nvim",
+    "navarasu/onedark.nvim",
     lazy = true,
-    opts = { style = "moon" },
+    opts = { style = "warmer" },
     init = function()
-      vim.cmd.colorscheme("tokyonight")
+      vim.cmd.colorscheme("onedark")
     end
   },
 }
