@@ -55,39 +55,88 @@ return {
         opts = function()
             local dap = require("dap")
             --if not dap.adapters["codelldb"] then
-            dap.adapters["codelldb"] = {
-                type = "server",
-                host = "localhost",
-                port = "${port}",
-                executable = {
-                    command = vim.fn.exepath("codelldb"),
-                    args = {
-                        "--port",
-                        "${port}",
-                    },
-                },
+            dap.adapters["lldb"] = {
+                type = "executable",
+                command = vim.fn.exepath("lldb-vscode"),
+                name = "lldb",
+            }
+            dap.adapters["cppdbg"] = {
+                id = "cppdbg",
+                type = "executable",
+                command = vim.env.HOME .. ".local/vscode-cpptools/extension/debugAdapters/bin/OpenDebugAD7",
             }
             --end
             for _, lang in ipairs({ "c", "cpp" }) do
                 dap.configurations[lang] = {
                     {
-                        type = "codelldb",
-                        request = "launch",
                         name = "Launch file",
+                        type = "cppdbg",
+                        request = "launch",
+                        -- TODO: save this somehow
                         program = function()
+                            --local actions = require("telescope.actions")
+                            --local action_state = require("telescope.actions.state")
+                            --require("telescope.builtin").find_files({
+                            --    attach_mappings = function(prompt_bufnr, _)
+                            --        actions.select_default:replace(function()
+                            --            actions.close(prompt_bufnr)
+                            --            local selection = action_state.get_selected_entry()
+                            --            vim.api.nvim_put({ selection[1] }, "", false, true)
+                            --        end)
+                            --        return true
+                            --    end,
+                            --})
+                            --local selection = action_state.get_selected_entry()
+                            --print(selection)
                             return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
                         end,
                         cwd = "${workspaceFolder}",
-                        stopOnEntry = false,
+                        stopAtEntry = true,
+                        setupCommands = {
+                            {
+                                text = "-enable-pretty-printing",
+                                description = "enable pretty printing",
+                                ignoreFailures = false,
+                            },
+                        },
                     },
                     {
-                        type = "codelldb",
-                        request = "attach",
-                        name = "Attach to process",
-                        processId = require("dap.utils").pick_process,
+                        name = "Attach to gdbserver :1234",
+                        type = "cppdbg",
+                        request = "launch",
+                        MIMode = "gdb",
+                        miDebuggerServerAddress = "localhost:1234",
+                        miDebuggerPath = "/usr/bin/gdb",
                         cwd = "${workspaceFolder}",
-                        stopOnEntry = false,
+                        program = function()
+                            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+                        end,
+                        setupCommands = {
+                            {
+                                text = "-enable-pretty-printing",
+                                description = "enable pretty printing",
+                                ignoreFailures = false,
+                            },
+                        },
                     },
+                    -- {
+                    --     type = "lldb",
+                    --     request = "launch",
+                    --     name = "Launch file",
+                    --     program = function()
+                    --         return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+                    --     end,
+                    --     cwd = "${workspaceFolder}",
+                    --     stopOnEntry = false,
+                    -- },
+                    -- {
+                    --     type = "codelldb",
+                    --     request = "attach",
+                    --     name = "Attach to process",
+                    --     processId = require("dap.utils").pick_process,
+                    --     cwd = "${workspaceFolder}",
+                    --     stopOnEntry = false,
+                    -- },
                 }
             end
         end,
