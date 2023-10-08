@@ -73,7 +73,14 @@ return {
                         text = "File Explorer",
                         highlight = "Directory",
                         text_align = "center",
+                        separator = true,
                     },
+                },
+                separator_style = "slope",
+                hover = {
+                    enabled = true,
+                    delay = 10,
+                    reveal = { "close" },
                 },
             },
             highlights = {
@@ -94,16 +101,20 @@ return {
                     bg = { attribute = "bg", highlight = "Normal" },
                 },
                 separator = {
-                    fg = { attribute = "bg", highlight = "Normal" },
+                    fg = { attribute = "bg", highlight = "StatusLineNC" },
                     bg = { attribute = "bg", highlight = "StatusLine" },
                 },
                 separator_selected = {
-                    fg = { attribute = "fg", highlight = "Special" },
-                    bg = { attribute = "bg", highlight = "StatusLineNC" },
+                    fg = { attribute = "bg", highlight = "StatusLineNC" },
+                    bg = { attribute = "bg", highlight = "Normal" },
                 },
                 separator_visible = {
-                    fg = { attribute = "fg", highlight = "Normal" },
-                    bg = { attribute = "bg", highlight = "StatusLineNC" },
+                    fg = { attribute = "bg", highlight = "StatusLineNC" },
+                    bg = { attribute = "bg", highlight = "Normal" },
+                },
+                offset_separator = {
+                    fg = { attribute = "fg", highlight = "VertSplit" },
+                    bg = { attribute = "bg", highlight = "LineNr" },
                 },
                 close_button = {
                     fg = { attribute = "fg", highlight = "Normal" },
@@ -181,7 +192,7 @@ return {
                     bg = { attribute = "bg", highlight = "StatusLine" },
                 },
                 modified_visible = {
-                    bg = { attribute = "bg", highlight = "StatusLine" },
+                    bg = { attribute = "bg", highlight = "Normal" },
                 },
                 modified_selected = {
                     bg = { attribute = "bg", highlight = "Normal" },

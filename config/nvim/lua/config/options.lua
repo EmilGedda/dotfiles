@@ -48,6 +48,7 @@ opt.joinspaces = false
 opt.sessionoptions = { "blank", "buffers", "curdir", "folds", "help", "tabpages", "winsize", "winpos", "terminal" }
 opt.softtabstop = 2
 opt.termguicolors = true
+opt.mousemoveevent = true
 
 -- prevent gitsigns from creating a signcolumn since we use the gutter instead
 vim.cmd("set signcolumn=number")
