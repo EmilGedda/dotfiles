@@ -41,7 +41,7 @@ return {
     -- },
     {
         "Mofiqul/vscode.nvim",
-        lazy = true,
+        --lazy = true,
         opts = {
             color_overrides = {
                 vscFront = "#c5c8c6",

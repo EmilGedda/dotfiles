@@ -98,7 +98,7 @@ return {
         end,
     },
 
-    -- Fuzzy ginder.
+    -- Fuzzy finder.
     -- The default key bindings to find files will use Telescope's
     -- `find_files` or `git_files` depending on whether the
     -- directory is a git repo.
@@ -333,8 +333,7 @@ return {
         opts = {},
 		-- stylua: ignore
     keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-      { "S", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      { "S", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
       { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
       { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
       { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
@@ -380,7 +379,7 @@ return {
             defaults = {
                 mode = { "n", "v" },
                 ["g"] = { name = "+goto" },
-                ["gz"] = { name = "+surround" },
+                ["s"] = { name = "+surround" },
                 ["]"] = { name = "+next" },
                 ["["] = { name = "+prev" },
                 ["<leader><tab>"] = { name = "+tabs" },
@@ -425,32 +424,32 @@ return {
                 end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
             end
 
-            map("]]", "next")
-            map("[[", "prev")
+            map("ää", "next")
+            map("öö", "prev")
 
             -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
             vim.api.nvim_create_autocmd("FileType", {
                 callback = function()
                     local buffer = vim.api.nvim_get_current_buf()
-                    map("]]", "next", buffer)
-                    map("[[", "prev", buffer)
+                    map("ää", "next", buffer)
+                    map("öö", "prev", buffer)
                 end,
             })
         end,
         keys = {
-            { "]]", desc = "Next Reference" },
-            { "[[", desc = "Prev Reference" },
+            { "ää", desc = "Next Reference" },
+            { "öö", desc = "Prev Reference" },
         },
     },
 
     -- buffer remove
     {
         "echasnovski/mini.bufremove",
-		-- stylua: ignore
-		keys = {
-			{ "<leader>bd", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer" },
-			{ "<leader>bD", function() require("mini.bufremove").delete(0, true) end, desc = "Delete Buffer (Force)" },
-		},
+        -- stylua: ignore
+        keys = {
+          { "<leader>bd", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer" },
+          { "<leader>bD", function() require("mini.bufremove").delete(0, true) end, desc = "Delete Buffer (Force)" },
+        },
     },
 
     -- better diagnostics list and others
@@ -464,11 +463,11 @@ return {
         },
         keys = {
             { "<leader>xx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
-            { "<leader>xX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
+            { "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
             { "<leader>xL", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
             { "<leader>xQ", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
             {
-                "[q",
+                "öq",
                 function()
                     if require("trouble").is_open() then
                         require("trouble").previous({ skip_groups = true, jump = true })
@@ -482,7 +481,7 @@ return {
                 desc = "Previous trouble/quickfix item",
             },
             {
-                "]q",
+                "äq",
                 function()
                     if require("trouble").is_open() then
                         require("trouble").next({ skip_groups = true, jump = true })
