@@ -44,9 +44,11 @@ return {
         lazy = true,
         opts = {
             color_overrides = {
+                vscFront = "#c5c8c6",
                 --vscLightBlue = "#c5c8c6",
             },
         },
+
         -- opts = function(_, opts)
         --     local c = require("vscode.colors").get_colors()
         --     opts["group_overrides"] = {}
@@ -56,6 +58,8 @@ return {
         -- end,
         init = function()
             vim.cmd.colorscheme("vscode")
+            -- remove background color of ctrl+k
+            vim.cmd("hi clear Pmenu")
         end,
     },
 }
