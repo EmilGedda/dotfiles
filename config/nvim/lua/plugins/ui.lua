@@ -186,6 +186,22 @@ return {
                 modified_selected = {
                     bg = { attribute = "bg", highlight = "Normal" },
                 },
+                duplicate = {
+                    fg = { attribute = "fg", highlight = "NvimTreeGitIgnored" },
+                    bg = { attribute = "bg", highlight = "StatusLine" },
+                    italic = false,
+                },
+                duplicate_visible = {
+                    fg = { attribute = "fg", highlight = "NvimTreeGitIgnored" },
+                    bg = { attribute = "bg", highlight = "Normal" },
+                    italic = false,
+                },
+                duplicate_selected = {
+                    fg = { attribute = "fg", highlight = "NvimTreeGitIgnored" },
+                    bg = { attribute = "bg", highlight = "Normal" },
+                    bold = false,
+                    italic = false,
+                },
             },
         },
     },

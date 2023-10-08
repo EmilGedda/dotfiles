@@ -42,6 +42,11 @@ return {
     {
         "Mofiqul/vscode.nvim",
         lazy = true,
+        opts = {
+            color_overrides = {
+                --vscLightBlue = "#c5c8c6",
+            },
+        },
         -- opts = function(_, opts)
         --     local c = require("vscode.colors").get_colors()
         --     opts["group_overrides"] = {}
