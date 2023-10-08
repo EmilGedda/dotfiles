@@ -11,17 +11,13 @@
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 --
 --
-local function map(mode, lhs, rhs, opts)
-    local keys = require("lazy.core.handler").handlers.keys
-    ---@cast keys LazyKeysHandler
-    -- do not create the keymap if a lazy keys handler exists
-    if not keys.active[keys.parse({ lhs, mode = mode }).id] then
-        opts = opts or {}
-        opts.noremap = true
-        opts.silent = true
-        vim.keymap.set(mode, lhs, rhs, opts)
-    end
-end
+--
+
+-- Wrapper around vim.keymap.set that will
+-- not create a keymap if a lazy key handler exists.
+-- It will also set `silent` to true by default.
+
+local map = vim.keymap.set
 
 map("n", "<leader>do", function()
     vim.diagnostic.open_float({ border = "rounded" })
@@ -49,7 +45,6 @@ map("n", "<s-tab>", function()
     vim.cmd("bp")
 end, { desc = "Previous buffer" })
 
-
 -- better up/down
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -59,7 +54,8 @@ map("n", "<C-h>", "<C-w>h", { desc = "Go to left window", remap = true })
 map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window", remap = true })
 map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window", remap = true })
 map("n", "<C-l>", "<C-w>l", { desc = "Go to right window", remap = true })
-
+map("n", "<C-l>", "<C-w>l", { desc = "Go to right window", remap = true })
+map("n", "<esc>", "<cmd>noh<cr>", { desc = "Clear highlight", remap = true })
 
 -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
 map("n", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search result" })
