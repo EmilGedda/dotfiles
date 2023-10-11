@@ -44,6 +44,7 @@ opt.winminwidth = 5 -- Minimum window width
 opt.wrap = false -- Disable line wrap
 opt.splitkeep = "screen"
 opt.shortmess:append({ C = true })
+opt.jumpoptions = "stack,view"
 opt.joinspaces = false
 opt.sessionoptions = { "blank", "buffers", "curdir", "folds", "help", "tabpages", "winsize", "winpos", "terminal" }
 opt.softtabstop = 2
