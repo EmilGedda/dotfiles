@@ -57,6 +57,7 @@ return {
 
             local luasnip = require("luasnip")
             local cmp = require("cmp")
+            local defaults = require("cmp.config.default")()
 
             return {
 
@@ -88,6 +89,8 @@ return {
                         hl_group = "LspCodeLens",
                     },
                 },
+
+                sorting = defaults.sorting,
 
                 mapping = cmp.mapping.preset.insert({
                     ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
@@ -134,7 +137,6 @@ return {
         end,
     },
 
-    -- auto pairs
     {
         "echasnovski/mini.surround",
         event = "VeryLazy",
