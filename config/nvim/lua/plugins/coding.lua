@@ -58,6 +58,7 @@ return {
             local luasnip = require("luasnip")
             local cmp = require("cmp")
             local defaults = require("cmp.config.default")()
+            local neogen = require("neogen")
 
             return {
 
@@ -111,6 +112,8 @@ return {
                             -- they way you will only jump inside the snippet region
                         elseif luasnip.expand_or_jumpable() then
                             luasnip.expand_or_jump()
+                        elseif neogen.jumpable() then
+                            neogen.jump_next()
                         elseif has_words_before() then
                             cmp.complete()
                         else
@@ -120,6 +123,8 @@ return {
                     ["<S-Tab>"] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_prev_item()
+                        elseif neogen.jumpable(-1) then
+                            neogen.jump_prev()
                         elseif luasnip.jumpable(-1) then
                             luasnip.jump(-1)
                         else
@@ -151,19 +156,26 @@ return {
             enable_autocmd = false,
         },
     },
-    {
-        "echasnovski/mini.comment",
-        event = "VeryLazy",
-        opts = {
-            options = {
-                custom_commentstring = function()
-                    return require("ts_context_commentstring.internal").calculate_commentstring()
-                        or vim.bo.commentstring
-                end,
-            },
-        },
-    },
 
+    -- add this to your lua/plugins.lua, lua/plugins/init.lua,  or the file you keep your other plugins:
+    {
+        "numToStr/Comment.nvim",
+        opts = {
+            -- add any options here
+        },
+        event = "VeryLazy",
+        lazy = false,
+    },
+    {
+        "danymat/neogen",
+        dependencies = "nvim-treesitter/nvim-treesitter",
+        config = true,
+        opts = function()
+            require("neogen").setup({ snippet_engine = "luasnip" })
+        end,
+        -- Uncomment next line if you want to follow only stable versions
+        -- version = "*"
+    },
     -- Better text-objects
     {
         "echasnovski/mini.ai",

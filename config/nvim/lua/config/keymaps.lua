@@ -106,3 +106,12 @@ map("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
 map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+
+map("n", "<leader>nf", function()
+    require("neogen").generate({
+        type = "any",
+    })
+end, { desc = "Neogen documentation" })
+
+map("n", "äq", "<cmd>cnext<cr>", { desc = "Next quick fix" })
+map("n", "öq", "<cmd>cprev<cr>", { desc = "Previous quick fix" })
